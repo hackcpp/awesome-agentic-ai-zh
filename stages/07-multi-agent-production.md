@@ -35,8 +35,49 @@
 2. [**Anthropic — Prompt Caching**](https://www.anthropic.com/news/prompt-caching) — 90% 成本下降的技巧
 3. [**Anthropic — Message Batches API**](https://docs.anthropic.com/en/docs/build-with-claude/batch-processing) — 非同步 batch job
 4. **任一 eval framework 的文件** — promptfoo 或 LangSmith 或 weave
-5. [**ai-boost/awesome-harness-engineering**](https://github.com/ai-boost/awesome-harness-engineering)（★ 780+）— agent harness 的工具 / pattern / eval / memory / MCP / observability 全集合。**framework 把 LLM 包成 agent；harness 把 agent 包成 production system**——這個 stage 學的就是 harness。
+5. [**ai-boost/awesome-harness-engineering**](https://github.com/ai-boost/awesome-harness-engineering)（★ 780+）— agent harness 的工具 / pattern / eval / memory / MCP / observability 全集合
 6. [**ZhangHanDong/harness-engineering-from-cc-to-ai-coding**](https://github.com/ZhangHanDong/harness-engineering-from-cc-to-ai-coding)（★ 1.3k+）— 從 Claude Code 原始碼學 harness 設計（中文）
+
+## 🏗 Harness Engineering — production agent runtime 的工程學 ⭐ 本 stage 核心概念
+
+### Discipline 定位：prompt → context → harness 三層
+
+把 LLM 用成 production agent 系統、有 3 層**工程學科**（discipline）。每一層 cover 不同問題、後一層假設前一層已經沒問題：
+
+| Discipline | 解決什麼問題 | 主要技巧 | 在哪學 |
+|---|---|---|---|
+| **1. Prompt Engineering** | 單次 LLM call 怎麼問才會準 | system prompt / few-shot / CoT / structured output | **[Stage 2](02-prompt-engineering.md)** |
+| **2. Context Engineering** | 跨多次 call 怎麼動態組裝 prompt | RAG retrieval / memory / context window 管理 / tool description 排序 | **[Stage 6](06-memory-rag.md)** + Stage 2 §進階 |
+| **3. Harness Engineering**<br>（**本節**） | 把多個 LLM call 包成 production agent runtime | agent loop / retry / safety / telemetry / observability / cost control | **本 stage** |
+
+→ **2025 後段「harness engineering」才正式成為業界共識詞**（Anthropic / Cursor / Cognition 等 AI coding tool 團隊用得最多）——因為前兩層已經被 prompt eng / context eng 解決得差不多了、production agent 的剩餘複雜度都在 runtime 工程。
+
+### Harness 的 6 個核心元件
+
+**Harness = 把 LLM agent 包成 production 系統的「工具帶」**。一個 production agent runtime 包含這 6 個元件：
+
+| 元件 | 做什麼 | 對應本 stage 練習 |
+|---|---|---|
+| **Agent loop** | 「LLM → tool → result → LLM」迴圈、穩定處理多輪 | 練習 1 multi-agent 辯論 |
+| **Tool registry** | 動態 tool dispatch、permission gate、sandboxing | （在每個 framework / SDK 都有） |
+| **Context manager** | message history 管理、context window 控制、auto-compact | Stage 6 + 本 stage 練習 4 SDK |
+| **Safety layer** | permission prompts、sandboxed exec、destructive op 攔截 | （Claude Code 內建、SDK 可自訂） |
+| **Retry / recovery** | tool fail 怎麼處理（exception vs LLM 自己看 error 反思） | 練習 4 SDK 進階 |
+| **Telemetry / Observability** | metrics、logging、token counting、trace export | **練習 3 Observability** |
+| **Eval harness** | regression test、quality gate、A/B test | **練習 2 Eval** |
+
+**Framework vs Harness 關鍵差別**：
+- **Framework**（[Stage 4](04-agent-frameworks.md)）規範 **API** — 你呼叫的介面長什麼樣
+- **Harness**（本節）規範 **runtime** — 怎麼跑、怎麼 recovery、怎麼觀測
+
+### Reference 實作
+
+想看 production-grade harness 長什麼樣？兩個 reference：
+
+- **Claude Code 整個 runtime** — 是 reference harness 實作。**讀 source 練習見 [Stage 5.6](05-claude-code-ecosystem.md#56--claude-code-source-解剖reference-harness-implementation)**（clone `claude-agent-sdk-python` 解剖 main loop + 6 元件位置）
+- **`anthropics/claude-agent-sdk-python`** source — 上面練習用的具體 repo
+
+→ 本 stage 剩下的 5 個練習（multi-agent / eval / observability / SDK / deploy）每個都是 harness 的一個面向。學完整 stage = 拼出完整的 harness engineering mental model。
 
 ## 🛠 動手練習（基礎 illustrative 練習）
 

@@ -14,7 +14,7 @@
 
 > ⚠️ **想用本機 LLM？這個 stage 不是那條路線。** Claude Code 需要 Anthropic API / OAuth，不能直接改接 Ollama 或本機 endpoint。離線、隱私資料或不想用 API 額度時，請看 [`resources/cookbook.md` Recipe 6](../resources/cookbook.md#6-本機-llm--cli-agent-快速-walkthrough)，用 OpenCode / goose / Aider / Hermes 這類支援 BYO LLM 的 CLI agent。
 
-> 📋 **本章組成**：6 個子章（5.1 基礎 / 5.2 MCP / 5.3 Skills / 5.4 Plugins / 5.5 Subagents / 5.6 Harness Internals），每個子章都有「學習目標 → 必修閱讀 → 動手練習 → 精選 Projects」 → 章末 自我檢查  
+> 📋 **本章組成**：6 個子章（5.1 基礎 / 5.2 MCP / 5.3 Skills / 5.4 Plugins / 5.5 Subagents / 5.6 Claude Code Source 解剖），每個子章都有「學習目標 → 必修閱讀 → 動手練習 → 精選 Projects」 → 章末 自我檢查。**注意**：harness engineering 的 **discipline 級概念**在 [Stage 7](07-multi-agent-production.md) 講；5.6 是拿 Claude Code 當 reference implementation 的 case study  
 > 🔑 **關鍵名詞**：見 [`resources/glossary.md` §5](../resources/glossary.md#5-claude-code-生態)
 
 ## Stack 一覽
@@ -492,41 +492,18 @@ You are a senior code reviewer. When invoked:
 
 ---
 
-## 5.6 — Harness Internals = Harness Engineering 入門 ⭐ Track B 必看
+## 5.6 — Claude Code Source 解剖（reference harness implementation）⭐ Track B 必看
 
-> **本節主題就是業界講的「harness engineering」**——把 LLM 包成 production agent 系統的 runtime 工程學。**Harness Engineering** 是 2025 年才開始被廣泛使用的詞、來自 Anthropic / Cursor / Cognition 等 AI coding tool 團隊的工程實踐共識。
-
-### Harness Engineering 是什麼（先定位）
-
-**Harness = 把 LLM agent 包成 production 系統的「工具帶」runtime 層**。一個 production agent 不是「LLM + tool」那麼簡單、中間還有一整套 runtime 處理：
-
-| 元件 | 做什麼 |
-|---|---|
-| **Agent loop** | 把「LLM 回 tool_use → 跑 tool → result append → 再叫 LLM」迴圈包成穩定流程 |
-| **Tool registry** | 動態 tool dispatch、permission gate、sandboxing |
-| **Context manager** | message history 管理、context window 控制、auto-compact |
-| **Safety layer** | permission prompts、sandboxed exec、destructive op 攔截 |
-| **Retry / recovery** | tool fail 時怎麼處理（exception vs LLM 自己看 error 反思）|
-| **Telemetry** | metrics、logging、token counting、trace export |
-
-**Framework vs Harness 的關鍵差別**：
-- **Framework**（Stage 4 LangGraph / CrewAI）規範 **API** — 你呼叫的介面長什麼樣
-- **Harness**（本節）規範 **runtime** — 怎麼跑、怎麼 recovery、怎麼觀測
-
-**為什麼本節在 Stage 5、不在 Stage 4 / Stage 7**：
-- Stage 4 教「**用**」framework 的視角（抽象層之上）
-- Stage 7 教 production 的 eval / observability / deploy（抽象層之下）
-- **本節在中間** — runtime 內部解剖。**Claude Code 本身就是一個高完成度的 reference harness**、所以放在 Claude Code stage
-
-到 5.5 為止你會**用** Subagent 了、但**沒看過 Claude Code 內部到底怎麼跑 agent loop**。本節打開引擎蓋。
+> **本節定位**：本節**不是** harness engineering 的 discipline 概念教學——discipline 級的定義 / 6 元件 / prompt→context→harness 三層 lineage 是 **[Stage 7 §Harness Engineering](07-multi-agent-production.md#-harness-engineering--production-agent-runtime-的工程學--本-stage-核心概念)** 在講。**本節是 case study**——拿 Claude Code（一個 production-grade reference harness）的 source code 來解剖、把 Stage 7 列的 6 個元件**在實作裡找到對應位置**。
 
 ### 學習目標
 
 完成本節後你會：
-- **解釋 harness engineering 是什麼**——以及為什麼這個詞 2025 後段才被業界廣泛使用（agent runtime 複雜度真正 production-ready 才 surface）
-- 講得出 agent harness 的 6 個核心元件（loop / tool registry / context manager / safety layer / retry / telemetry）並對應到 Claude Code 哪裡
 - 看得懂 `claude-agent-sdk-python` source 的 main loop（不是逐行、是抓得到主幹）
-- 講得清楚 **framework（Stage 4）vs harness 差在哪**：framework 規範 **API**（你呼叫的介面），harness 規範 **runtime**（怎麼跑、怎麼 recovery、怎麼觀測）
+- 在 source 裡標出 [Stage 7 列的 6 個 harness 元件](07-multi-agent-production.md#-harness-engineering--production-agent-runtime-的工程學--本-stage-核心概念)（agent loop / tool registry / context manager / safety layer / retry / telemetry）各自的 file:line
+- 講得出 Claude Code 的 agent loop 跟 Stage 3 練習 3 from-scratch ReAct 差在哪——production-grade 多了哪些東西
+
+> **discipline 級概念在哪**：harness engineering 是什麼 / framework vs harness 差別 / prompt→context→harness 三層 lineage → 全部見 **[Stage 7 §Harness Engineering](07-multi-agent-production.md#-harness-engineering--production-agent-runtime-的工程學--本-stage-核心概念)**。本節只負責 Claude Code source 的 case study。
 
 ### 📚 必修閱讀
 
@@ -542,12 +519,13 @@ You are a senior code reviewer. When invoked:
 **步驟**：
 1. **clone**：`git clone https://github.com/anthropics/claude-agent-sdk-python`
 2. **定位 agent loop**：找出 `_internal/client.py` 裡實際發出 LLM call、收 tool_use response、dispatch 給 tool runner 的核心 loop。提示：找 `async def` 跟 `tool_use_id` 關鍵字
-3. **標出 5 個關鍵元件**在 source 裡的位置（檔名 + 行號）：
-   - (a) **Tool call dispatch**：LLM 回 tool_use → 怎麼 route 到對應 tool 實作
-   - (b) **Context append**：tool result 怎麼寫回 message history、變成下一輪的 input
-   - (c) **Safety check**：tool 執行前有沒有 permission gate / sandboxing
-   - (d) **Retry / error path**：tool fail 時怎麼處理（直接拋 exception 還是 LLM 自己看 error 反思）
-   - (e) **Telemetry hook**：metrics / logging / token counting 接在哪
+3. **標出 6 個 harness 元件**在 source 裡的位置（檔名 + 行號）——對應 [Stage 7 列的 6 元件](07-multi-agent-production.md#-harness-engineering--production-agent-runtime-的工程學--本-stage-核心概念)：
+   - (a) **Agent loop**：實際發出 LLM call + 收 response 的迴圈在哪
+   - (b) **Tool registry / dispatch**：LLM 回 tool_use → 怎麼 route 到對應 tool 實作
+   - (c) **Context manager**：tool result 怎麼寫回 message history、context window 控制 / auto-compact
+   - (d) **Safety layer**：tool 執行前有沒有 permission gate / sandboxing
+   - (e) **Retry / recovery**：tool fail 時怎麼處理（exception vs LLM 自己看 error 反思）
+   - (f) **Telemetry**：metrics / logging / token counting 接在哪
 4. **寫一段 80-150 字摘要**：「Claude Code 的 agent loop 跟你 Stage 3 練習 3 from-scratch ReAct 差在哪」。重點不是「Claude Code 比較複雜」這種廢話，是**講得出多了哪些東西、為什麼那些是 production-grade 必須**
 
 **交付物**：一段筆記（寫在自己的 obsidian / notion / `.md` 都行），不必交。但**講不出來你就還沒懂**——這是進 Stage 7 production deploy 之前的必要 mental model。
@@ -578,7 +556,7 @@ You are a senior code reviewer. When invoked:
 - [ ] 寫一份能在特定觸發詞自動載入的 `SKILL.md`
 - [ ] 把 skill 打包成 plugin，再用 `marketplace.json` 發佈
 - [ ] **寫過 `.claude/agents/` 自訂 subagent 並從 Task tool invoke 過**
-- [ ] **讀過 `claude-agent-sdk-python` 的 main loop、能講出 5 個關鍵元件位置**（§5.6 練習）
+- [ ] **讀過 `claude-agent-sdk-python` 的 main loop、能在 source 裡標出 [Stage 7 列的 6 個 harness 元件](07-multi-agent-production.md#-harness-engineering--production-agent-runtime-的工程學--本-stage-核心概念)位置**（§5.6 練習）
 - [ ] 從角色分工說出 MCP / Skills / Plugins / Subagents / SDK 各自的位置
 
 如果都可以 → 前往 [Stage 6 — Memory & RAG](06-memory-rag.md)。
