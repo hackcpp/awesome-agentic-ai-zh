@@ -6,7 +6,7 @@
 
 > 💡 這 stage 用語密度高（**RAG / 向量資料庫 / embedding / chunking / hybrid search / reranking⋯**）→ 不熟先翻 [`resources/glossary.md` §3](../resources/glossary.md#3-memory--retrieval--rag)。
 
-> 📋 **本章組成**：〔Context Engineering 是什麼（先定位）+ 兩個概念對照表〕→ 學習目標 → 進入條件 → 必修閱讀 →〔可選 · 概念地圖：單元指引 + Chunking + Memory 設計三種 pattern〕→ 進階 RAG 技巧（GraphRAG / Contextual Retrieval / Hybrid Search）→ 動手練習 → 常用工具推薦 → 精選 Projects → 自我檢查  
+> 📋 **本章組成**：〔Context Engineering 是什麼（先定位）+ 概念對照表 ×2〕→ 學習目標 → 進入條件 → 必修閱讀 → 單元指引 → Chunking → Memory 設計三種 pattern → 進階 Memory（CoALA / Generative Agents / 2024-2025 縱覽）→ Reflexion 完整版 → 進階 Reasoning（Path 1 prompt-based + Path 2 o1/R1 trained-in）→ 進階 RAG 技巧（GraphRAG / Contextual Retrieval / Hybrid Search / Query Trans / Self-improving / RAPTOR / 縱覽）→ 動手練習 → 常用工具推薦 → 精選 Projects → 自我檢查  
 > 🔑 **關鍵名詞**：見 [`resources/glossary.md` §3](../resources/glossary.md#3-memory--retrieval--rag)（memory / RAG / embedding / chunking / reranking）
 
 ## 🎯 Context Engineering 是什麼（先定位）
@@ -187,6 +187,47 @@ Chunking 進階思考：
 
 > 💡 **Track B 重點**：你 Stage 7 寫 multi-agent 時，每個 agent 都會有「自己的 memory」+「shared memory」雙層——需要的 pattern 通常是 **2 + 3 混用**。先在本 stage 把 3 種 pattern 跑透，到 Stage 7 才不會被 multi-agent memory 設計卡住。
 
+## 🧬 進階 Memory — 2024-2025 觀念 + 縱覽 ⭐ Track B 選讀
+
+上面 3 種 pattern 是**實作層**——下面是**觀念層 + 最新作品**。學完上面再回來看會更有感。
+
+### CoALA framework — agent memory 的 4 層 taxonomy
+
+[**Sumers et al. 2023 — Cognitive Architectures for Language Agents**](https://arxiv.org/abs/2309.02427) 把 agent memory 拆成 4 種、是現在最常用的 mental model：
+
+| 類型 | 存什麼 | 對應例子 |
+|---|---|---|
+| **Working memory** | 當前 task 上下文 | LLM context window 本身 |
+| **Episodic memory** | 過去 task 的具體經驗 | Reflexion 反思記錄、past trajectories |
+| **Semantic memory** | 抽象事實 / 知識 | RAG 知識庫、user profile、preference |
+| **Procedural memory** | 怎麼做事的程式 / skill | tool definitions、[Skills（Stage 5.3）](05-claude-code-ecosystem.md#53--skills--可重複使用的-prompt--instruction-包) |
+
+→ **為什麼有用**：上面 3 種 pattern（buffer / summary / vector）都只在處理 working + episodic。Production agent 4 層都要設計——CoALA 是檢查表，看看你的 agent 哪一層缺了。
+
+### Generative Agents — 三分數打分（經典案例）
+
+[**Park et al. 2023 — Generative Agents: Smallville**](https://arxiv.org/abs/2304.03442) 的小鎮模擬有 25 個 NPC agent、每個都有自己的 memory stream。retrieve 時用三個分數加權：
+
+- **Importance**：LLM 自己幫每個 memory 打 1-10 重要性分（吃飯 = 2 分、分手 = 9 分）
+- **Recency**：時間衰減（exponential decay）
+- **Relevance**：跟當前 query 的 embedding 相似度
+
+最終分 = `α·importance + β·recency + γ·relevance`、排前 k retrieve。**這是 2024-2025 production memory layer（mem0 / Letta）的概念骨架**。
+
+### 2024-2025 最新 Memory 作品 — 縱覽
+
+| 技巧 | 一句話 | 年份 / Paper |
+|---|---|---|
+| **Anthropic Memory Tool** | Claude 官方 tool-based memory、API 直接 call、file-based | [Anthropic Docs](https://docs.claude.com/en/docs/agents-and-tools/tool-use/memory-tool) 2024 |
+| **A-MEM**（Agentic Memory）| Zettelkasten-inspired、memory 之間自動建 link、會演化 | [Xu et al. 2025](https://arxiv.org/abs/2502.12110) ⭐ **2025** |
+| **HippoRAG 2** | 海馬迴啟發、KG + Personalized PageRank、跨文件 multi-hop | [Gutiérrez et al. 2025](https://arxiv.org/abs/2502.14802) ⭐ **2025** |
+| **MemGPT → Letta GA** | OS-paging memory、working / archival 雙層、long session 強項 | [Packer et al. 2023](https://arxiv.org/abs/2310.08560) → Letta 2024 GA |
+| **MemoryBank** | Ebbinghaus 遺忘曲線、被存取的 memory 強化、沒用的衰減 | [Zhong et al. 2023](https://arxiv.org/abs/2305.10250) |
+| **MemoryLLM** | self-updatable memory parameters 內建在 model（在權重而非 context）| [Wang et al. 2024](https://arxiv.org/abs/2402.04624) |
+| **mem0**（已在上面列） | production memory layer、auto fact extraction + forgetting | [mem0ai/mem0](https://github.com/mem0ai/mem0) 2024 |
+
+> 💡 **2025 觀察**：**A-MEM** / **HippoRAG 2** 都把 memory 從「flat vector store」往「結構化、可演化、可聯想」推進——A-MEM 學 Zettelkasten 筆記法、HippoRAG 學人腦海馬迴。如果你的 agent 跑很久（以週 / 月為單位）、值得追這條線。
+
 ## 🪞 進階：帶持久記憶的 Reflexion 完整版 ⭐ Track B 選讀
 
 > **本節是 concept + routing、不是練習**。延續 [Stage 3 §反思](03-tool-use-and-hello-agent.md#-反思reflexion--self-refine-概念--路由) 的基本版（single-session Actor / Critic loop），講為什麼有些反思**需要**持久記憶——這版本才真正屬於 Stage 6 主題。
@@ -232,6 +273,47 @@ Stage 3 §反思（基本版）                Stage 6 本節（完整版）
 > - 想理解「反思 loop 怎麼運作、單次怎麼跑」→ Stage 3 §反思
 > - 想理解「反思怎麼跨 session 累積、agent 怎麼從過去學教訓」→ 本節
 > - 想看 production agent 內怎麼用反思（Cursor / Claude Code）→ [Stage 5 §5.6 Harness Internals](05-claude-code-ecosystem.md#56--claude-code-source-解剖reference-harness-implementation-track-b-必看)
+
+## 🤔 進階 Reasoning / Reflection — 2024-2025 思潮 ⭐ 兩個 track 都看
+
+Reflexion 是 **prompt-based reflection**——LLM 在 inference 時自己改自己。2024-2025 出現了**第二條路**：**訓練時就把 reflection 練進 model**（OpenAI **o1** / DeepSeek **R1**）。兩條路你都該知道。
+
+### Path 1：Prompt-based reflection / reasoning（傳統做法）
+
+| 技巧 | 核心想法 | Paper |
+|---|---|---|
+| **Self-Consistency** | sample N 條推理、多數決 — **最簡單 + 最常用** | [Wang et al. 2022](https://arxiv.org/abs/2203.11171) |
+| **Tree of Thoughts (ToT)** | reasoning 變樹、可分叉可回溯、適合 puzzle / planning | [Yao et al. 2023](https://arxiv.org/abs/2305.10601) |
+| **Graph of Thoughts (GoT)** | 不只樹、可任意合併分支 | [Besta et al. 2023](https://arxiv.org/abs/2308.09687) |
+| **Chain-of-Verification (CoVe)** | 生答案 → 對自己提驗證題 → 改答案 | [Dhuliawala et al. 2023](https://arxiv.org/abs/2309.11495) |
+| **CRITIC** | tool-augmented self-critique（用 search / calculator 驗）| [Gou et al. 2023](https://arxiv.org/abs/2305.11738) |
+| **Self-Discover** | agent 先「發現」該用什麼 reasoning structure 再執行 | [Zhou et al. ICML 2024](https://arxiv.org/abs/2402.03620) ⭐ 2024 |
+| **Self-Refine / Reflexion** | 已在上面 / Stage 3 講 | Stage 3 §反思、本 stage §Reflexion |
+
+### Path 2：Trained-in reasoning / reflection（2024-2025 大轉折）
+
+OpenAI **o1**（2024-09）開啟、DeepSeek **R1**（2025-01）開源化——把「step-by-step thinking + 自我糾錯」**訓練進 model 權重**、inference 時自動展開長 reasoning chain（thinking tokens）。**這是 2024-2025 LLM 最大典範轉移**。
+
+| Model | 來源 | 特色 | 連結 |
+|---|---|---|---|
+| **o1 / o1-pro / o3** | OpenAI 2024-09 ~ 2025 | 閉源、inference-time scaling、隱藏 reasoning chain | [OpenAI o1](https://openai.com/o1/) |
+| **DeepSeek-R1** | DeepSeek 2025-01 | 開源 671B MoE、訓練法公開（純 RL、不靠 SFT 起步） | [paper](https://arxiv.org/abs/2501.12948) ⭐ **2025** |
+| **DeepSeek-R1-Distill** | DeepSeek 2025-01 | R1 蒸餾到 1.5B-70B、家用 GPU 可跑 | HuggingFace |
+| **Claude Sonnet 4.5 / Opus 4.5 Thinking** | Anthropic 2024-2025 | 閉源、可控 thinking budget（API 參數可調）| [Anthropic Docs](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) |
+| **Gemini 2.5 Thinking** | Google 2025 | 閉源、可看 thinking trace | [Gemini API](https://ai.google.dev/gemini-api/docs/thinking) |
+| **QwQ-32B / QvQ-72B** | Alibaba Qwen 2024-11 / 2025 | 開源 reasoning model、QvQ 是視覺 reasoning 版本 | [QwQ blog](https://qwenlm.github.io/blog/qwq-32b-preview/) |
+| **Marco-o1** | Alibaba 2024-11 | 開源、ToT + MCTS 整合 | [paper](https://arxiv.org/abs/2411.14405) |
+
+### 兩條路怎麼選
+
+| 你的情況 | 建議 |
+|---|---|
+| 用 GPT-4o / 一般 Claude / Gemini base、想加 reasoning | Path 1（prompt-based）—— ToT / Self-Consistency / CoVe |
+| 預算 / latency 允許、要最強 reasoning | Path 2 —— o1 / Claude Sonnet 4.5 Thinking / R1 直接用 |
+| 想自己 fine-tune reasoning model | Path 2 —— 讀 R1 paper、用 R1-Distill 起步 |
+| Multi-agent debate / critic 場景 | Path 1（CRITIC / debate）+ [Stage 7 §multi-agent](07-multi-agent-production.md) |
+
+> 💡 **2025 觀察**：reasoning model（o1 / R1 / QwQ / Claude Thinking）開始把 Reflexion 那套吞進權重——但 **prompt-based reflection 沒被取代**：它在 agent loop（你控制反思時機 / 反思內容）+ multi-agent debate（誰 critique 誰）還是必須的。兩條路會長期共存、production agent 兩個都用。
 
 ## 🚀 進階 RAG 技巧（跑完基本 RAG 之後再看）
 
@@ -311,6 +393,79 @@ Stage 3 §反思（基本版）                Stage 6 本節（完整版）
 **Paper / 入門**：
 - [**Pinecone — Rerankers and Two-Stage Retrieval**](https://www.pinecone.io/learn/series/rag/rerankers/) — reranker mental model 講最清楚
 - [**Anthropic — Contextual Retrieval**](https://www.anthropic.com/news/contextual-retrieval)（上面已列）— 同時示範 hybrid + reranker、有 benchmark
+
+### 🔄 Query Transformations — HyDE / Multi-Query / RAG Fusion
+
+**Mental model**：vanilla RAG 把 user query 直接 embed 去查——但 query 跟文件**用詞 / 風格 / 抽象層級**經常差太多（user 問「我胃痛怎麼辦」、文件寫「上腹部疼痛之鑑別診斷」）。Query transformations 在 retrieve **前**先改寫 query、讓改寫版本更接近文件形式。
+
+**3 個代表技巧**：
+
+| 技巧 | 怎麼改寫 | 何時用 |
+|---|---|---|
+| **HyDE**（Hypothetical Document Embeddings）| 先讓 LLM 對 query 生成「假想答案」、用答案 embedding 查 | query 跟 chunk 用詞風格差距大 |
+| **Multi-Query** | LLM 把 query 改寫成 N 個變體分別 retrieve、union 去重 | query 太短 / 模糊 / 多義 |
+| **RAG Fusion** | Multi-Query + RRF 融合 N 個 retrieval 結果 | 同上、想要更穩定的排名 |
+
+**何時不用**：query 已經是長 + 結構化（RAG over code、user 直接 paste error stack trace）——改寫反而引入雜訊。
+
+**Paper / 實作**：
+- [**HyDE (Gao et al. 2022)**](https://arxiv.org/abs/2212.10496) — 原始 paper
+- [**RAG Fusion (Raudaschl 2023)**](https://github.com/Raudaschl/rag-fusion) — Multi-Query + RRF 的 reference 實作
+- LangChain 內建 `MultiQueryRetriever` / LlamaIndex `HyDEQueryTransform`
+
+### 🔁 Self-improving RAG — Self-RAG / CRAG / Adaptive RAG（2024 主軸）
+
+**Mental model**：上面所有 RAG 技巧都假設「query 來 → retrieve → generate」是固定 pipeline。Self-improving RAG 把這個 pipeline 變成**有判斷能力的 agent loop**——LLM 自己決定要不要 retrieve、判斷 retrieve 品質、不夠就再查或改 query。**這是 2024 RAG 研究的主軸**。
+
+| 技巧 | 怎麼自我修正 | Paper |
+|---|---|---|
+| **Self-RAG** | 訓練 LLM 輸出 `[Retrieve]` token 決定要不要查、retrieve 後輸出 `[IsRel]/[IsSup]/[IsUse]` 評分每個片段 | [Asai et al. ICLR 2024](https://arxiv.org/abs/2310.11511) |
+| **CRAG**（Corrective RAG）| retrieval evaluator 打分；高信心直接用、低信心 fallback 到 web search、中信心做 query 改寫 | [Yan et al. 2024](https://arxiv.org/abs/2401.15884) |
+| **Adaptive RAG** | classifier 先判 query 複雜度、routing 到「不 retrieve / single-step / multi-step」三種策略 | [Jeong et al. NAACL 2024](https://arxiv.org/abs/2403.14403) |
+
+**為什麼這是 2024 主軸**：固定 pipeline 在簡單 query（「Tokyo 首都？」不用 retrieve）+ 複雜 query（multi-hop、cross-doc）兩個極端都吃虧。讓 LLM 自己 routing → 兩個極端都解。
+
+**何時用**：production RAG、query 類型分布廣（從事實題到推理題都有）、願意付 1.5-3 倍 latency 換準確度。
+**何時不用**：query 類型單一 / 預算 / latency 極緊。
+
+**實作**：LangGraph 有官方 [Self-RAG cookbook](https://langchain-ai.github.io/langgraph/tutorials/rag/langgraph_self_rag/) + [CRAG cookbook](https://langchain-ai.github.io/langgraph/tutorials/rag/langgraph_crag/) + [Adaptive RAG cookbook](https://langchain-ai.github.io/langgraph/tutorials/rag/langgraph_adaptive_rag/)、可直接套。
+
+### 🌳 RAPTOR — 階層式遞迴 retrieval（ICLR 2024）
+
+**Mental model**：vanilla chunking 把文件切扁平 chunk——但**整本書的主旨不在任何單一 chunk 裡**。RAPTOR 把 chunk 遞迴聚類 + 摘要、建一棵**多層樹**：底層 = 原 chunk、中層 = 一群相關 chunk 的摘要、頂層 = 全文摘要。retrieve 時可選整棵樹搜尋、或選特定抽象層。
+
+**為什麼有用**：
+- **抽象 query** 撈得到（「這篇 paper 主要結論？」原 chunk 都沒這句、但頂層摘要有）
+- **細節 query** 也撈得到（底層 chunk 保留）
+- 跟 GraphRAG 不同——RAPTOR 是**樹**（hierarchical summarization）、GraphRAG 是**圖**（entity-relation）
+
+**何時用**：長文件（書、論文、報告）需要不同抽象層 query、知識庫 narrative 連貫。
+**何時不用**：chunk 之間獨立（FAQ）、知識庫經常變動（重建樹貴）。
+
+**Paper / 實作**：
+- [**RAPTOR (Sarthi et al. ICLR 2024)**](https://arxiv.org/abs/2401.18059) ⭐ — 原始 paper
+- [**parthsarthi03/raptor**](https://github.com/parthsarthi03/raptor) — 官方 reference 實作
+- LlamaIndex 內建 `RAPTOR pack`
+
+### 📊 還有什麼 — RAG 進階技巧縱覽（一張表速查）
+
+下面是其他 production / research 常見技巧、按用途分類。**每行 = 名字 + 一句話 + paper**——想深入挑感興趣的去原 paper。
+
+| 技巧 | 一句話 | 年份 / Paper |
+|---|---|---|
+| **Sentence-Window Retrieval** | embed 句子、retrieve 後回傳 ± N 句 window | LlamaIndex 內建 |
+| **Parent-Child / Small-to-Big** | embed 小 chunk、回傳 parent chunk | LangChain `ParentDocumentRetriever` |
+| **Multi-Vector Retrieval** | 一個 chunk 多個 embedding（摘要 / 原文 / 假想問題）| LangChain `MultiVectorRetriever` |
+| **ColBERT / 後互動 retrieval** | token-level 比對而非 pooled embedding | [Khattab & Zaharia 2020](https://arxiv.org/abs/2004.12832)、[RAGatouille](https://github.com/AnswerDotAI/RAGatouille) |
+| **LongRAG** | 大 chunk（4k）+ long-context reader、減少 retrieval 次數 | [Jiang et al. 2024](https://arxiv.org/abs/2406.15319) |
+| **HippoRAG 2** | 海馬迴啟發、KG + PageRank、跨文件 multi-hop 聯想 | [Gutiérrez et al. 2025](https://arxiv.org/abs/2502.14802) ⭐ **2025** |
+| **MemoRAG** | memory model 把 KB 壓成 latent memory、retrieve 用線索觸發 | [Qian et al. 2024](https://arxiv.org/abs/2409.05591) |
+| **KAG**（Knowledge-Augmented Generation） | 嚴格 schema KG + 邏輯推理、金融 / 醫療 / 法律場景 | [Liang et al. 2024 (Ant Group)](https://arxiv.org/abs/2409.13731) |
+| **ColPali** | 直接對 PDF 頁面圖像 embed、繞過 OCR | [Faysse et al. 2024](https://arxiv.org/abs/2407.01449) |
+| **Agentic RAG** | retrieval 當 tool、agent 自己決定查幾次 / 怎麼查 | LlamaIndex / LangGraph、[Stage 7](07-multi-agent-production.md) 主場 |
+| **DSPy + RAG** | 不寫 prompt、用 program + signature、auto-optimize | [stanfordnlp/dspy](https://github.com/stanfordnlp/dspy) |
+
+> 💡 **2025 趨勢觀察**：**HippoRAG 2 / A-MEM / KAG** 都把 RAG 往「memory + KG + retrieval」融合方向推進；**ColPali / 視覺 RAG** 是 multimodal 方向；**DSPy / RAG agent** 是「不再手寫 prompt、讓系統自動 optimize」方向。三條線都值得追。
 
 ## 🛠 動手練習（基礎 illustrative 練習）
 
