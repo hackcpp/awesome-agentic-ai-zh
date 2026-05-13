@@ -305,7 +305,7 @@ Reflexion 是 **prompt-based reflection**——LLM 在 inference 時自己改自
 
 ### Path 2：Trained-in reasoning / reflection（2024-2026 大轉折）
 
-OpenAI **o1**（2024-09）開啟、DeepSeek **R1**（2025-01）開源化——把「step-by-step thinking + 自我糾錯」**訓練進 model 權重**、inference 時自動展開長 reasoning chain（thinking tokens）。**這是 2024-2026 LLM 最大典範轉移**、目前所有 frontier model 都走這路。下表只列**當前（2026-05）frontier**——歷史前身（o1 / R1 / Sonnet 4.5 / Gemini 2.5）省略、想看 lineage 看每家發布日列。
+OpenAI **o1**（2024-09）開啟、DeepSeek **R1**（2025-01）開源化、**DeepSeek-R2**（2026-03 AIME 2025 達 **79.7%**）+ Claude Opus 4.7（2026-04）+ GPT-5.5（2026-04）+ Gemini 3.1 Pro（2026-02）為當前 frontier——把「step-by-step thinking + 自我糾錯」**訓練進 model 權重**、inference 時自動展開長 reasoning chain（thinking tokens）。**這是 2024-2026 LLM 最大典範轉移**、目前所有 frontier model 都走這路。下表只列**當前（2026-05）frontier**——歷史前身（o1 / R1 / Sonnet 4.5 / Gemini 2.5）省略、想看 lineage 看每家發布日列。
 
 | Model | 來源 / 發布 | 特色 | 連結 |
 |---|---|---|---|

@@ -208,7 +208,7 @@ agent 收到任務
 | 框架 | 狀態 | 強項 |
 |---|---|---|
 | [**browser-use**](https://github.com/browser-use/browser-use) ⭐ | **86k+ stars、MIT** | 2026 最火 OSS、Python、5 行起步、支援 OpenAI / Claude / Gemini / Ollama |
-| [**Microsoft OmniParser v2**](https://github.com/microsoft/OmniParser) | 2026 更新、Apache 2.0 | vision-based GUI parsing、60% latency 改善、ScreenSpot Pro 39.6% accuracy。同 repo 內含 **OmniTool**（Windows 11 VM 控制、可搭 GPT-4o / o1 / DeepSeek-R1 / Qwen 2.5VL / Claude Computer Use）|
+| [**Microsoft OmniParser v2**](https://github.com/microsoft/OmniParser) | 2026 更新、Apache 2.0 | vision-based GUI parsing、60% latency 改善、ScreenSpot Pro 39.6% accuracy。同 repo 內含 **OmniTool**（Windows 11 VM 控制、可搭 GPT-5.5 / Claude Opus 4.7 / DeepSeek-R2 / Qwen 2.5VL / Claude Computer Use）|
 | **Playwright + LLM**（DIY）| — | 不是專門 framework、但 Playwright 是 web automation 標準、加 LLM wrapper 就能用 |
 
 **Why browser-use 86k stars 這麼火**：
@@ -337,7 +337,7 @@ from langchain_openai import ChatOpenAI
 
 agent = Agent(
     task="Search Hacker News for top AI agent posts this week and summarize",
-    llm=ChatOpenAI(model="gpt-4o"),  # 也可換 Claude / Gemini
+    llm=ChatOpenAI(model="gpt-5.5"),  # 也可換 Claude Opus 4.7 / Gemini 3.1 Pro / DeepSeek-R2
 )
 result = await agent.run()
 ```

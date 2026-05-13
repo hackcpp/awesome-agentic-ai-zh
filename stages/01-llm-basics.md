@@ -30,7 +30,7 @@
 
 ## 📚 必修閱讀
 
-1. [**Anthropic — What is Claude?**](https://www.anthropic.com/news/claude-3-family) — 官方模型總覽
+1. [**Anthropic — Claude 模型總覽**](https://docs.claude.com/en/about-claude/models/overview) — 官方模型 family、含 2026 最新 Opus 4.7 / Sonnet 4.6 / Haiku 4.5
 2. [**OpenAI Quickstart**](https://platform.openai.com/docs/quickstart) — 第一次 API call 的步驟
 3. [**A Visual Guide to LLM Tokenizers**](https://huggingface.co/learn/llm-course/chapter6/1) — Hugging Face 的入門
 4. [**Anthropic API Pricing**](https://www.anthropic.com/pricing#anthropic-api) — 把計價表看完，算一下 1k input + 1k output 的成本
@@ -290,11 +290,11 @@ if hasattr(sys.stdout, "reconfigure"):
 
 import anthropic
 
-# Anthropic 2026 Q1 公開計價（每 1M token、USD）— 跑前對照 https://www.anthropic.com/pricing
+# Anthropic 2026 Q2 公開計價（每 1M token、USD）— 跑前對照 https://www.anthropic.com/pricing
 PRICING = {
     "claude-haiku-4-5":   {"input": 1.00, "output":  5.00},
-    "claude-sonnet-4-5":  {"input": 3.00, "output": 15.00},
-    "claude-opus-4-5":    {"input": 15.0, "output": 75.00},
+    "claude-sonnet-4-6":  {"input": 3.00, "output": 15.00},
+    "claude-opus-4-7":    {"input": 5.00, "output": 25.00},  # Opus 4.7 (April 2026) 價格下調至 5/25
 }
 
 client = anthropic.Anthropic()
@@ -315,7 +315,7 @@ for name, r in PRICING.items():
 
 # === 自我驗證 ===
 assert cost_one > 0, "Cloud LLM 一定有成本"
-print(f"\n✅ 練習 3 通過（Anthropic）— 1000 次 haiku ≈ $0.25、sonnet ≈ $0.76、opus ≈ $3.81")
+print(f"\n✅ 練習 3 通過（Anthropic）— 1000 次 haiku ≈ $0.25、sonnet 4.6 ≈ $0.76、opus 4.7 ≈ $1.27")
 ```
 
 **預期輸出**：
@@ -324,8 +324,8 @@ model: claude-haiku-4-5
 single: input=14 output=48 → $0.000254
 1000 calls cost across model tiers:
   claude-haiku-4-5       $0.2540
-  claude-sonnet-4-5      $0.7620
-  claude-opus-4-5        $3.8100
+  claude-sonnet-4-6      $0.7620
+  claude-opus-4-7        $1.2700
 ```
 
 **Trade-off 對照**：本機 Ollama 跑 1000 次免費但要 ~2 hr；Anthropic haiku ~10 min $0.25；sonnet ~10 min $0.76。**production 場景才考慮 cloud；學習 / 實驗 / debug 全用本機**。

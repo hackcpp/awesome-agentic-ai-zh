@@ -158,7 +158,7 @@ cd awesome-agentic-ai-zh
 
 - **基本 Python** — 寫過 function、用過 API、看得懂 JSON
 - **基本 git** — clone、commit、push
-- **想學的動機** — agent 是 2025 年之後變化最快的領域，需要持續投入
+- **想學的動機** — agent 是 2024-2026 變化最快的領域，需要持續投入（2026 仍每月推新 model / 新 framework）
 
 上面有缺的就從 Stage 0 補齊；都會了就**直接跳 Stage 1**。
 
