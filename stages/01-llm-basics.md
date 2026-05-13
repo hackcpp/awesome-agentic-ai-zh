@@ -132,8 +132,59 @@ usage: Usage(input_tokens=18, output_tokens=42, ...)
 - 注意：`temperature ≠ 0` 會產生變動
 - 注意：同一句話的英文 vs 中文 token 數差異
 
+<details open>
+<summary>📋 <b>起手碼 — Path A（本機 Ollama gemma3n:e4b、默認）</b>（複製到 <code>practice_2.py</code>）</summary>
+
+```python
+# 需要：pip install openai     (OpenAI-compatible SDK 跟 Ollama 溝通)
+# 前置：ollama pull gemma3n:e4b && ollama serve
+import sys, statistics
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
+from openai import OpenAI
+
+client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
+
+PROMPTS = {
+    "中文": "用一句話描述一隻貓在做什麼。",
+    "English": "Describe in one sentence what a cat is doing.",
+}
+
+N = 10  # 本機慢、N 小一點；確認 OK 後加大
+for label, prompt in PROMPTS.items():
+    output_tokens = []
+    for _ in range(N):
+        r = client.chat.completions.create(
+            model="gemma3n:e4b",
+            max_tokens=80,
+            temperature=1.0,  # 拉高 temperature 看 variance
+            messages=[{"role": "user", "content": prompt}],
+        )
+        output_tokens.append(r.usage.completion_tokens)
+    print(f"\n[{label}] prompt: {prompt}")
+    print(f"  input tokens: {r.usage.prompt_tokens}")
+    print(f"  output tokens — min={min(output_tokens)} max={max(output_tokens)} mean={statistics.mean(output_tokens):.1f} stdev={statistics.stdev(output_tokens):.1f}")
+
+# === 自我驗證 ===
+assert max(output_tokens) > min(output_tokens), "temperature=1.0 下、output 長度應該有 variance"
+print("\n✅ 練習 2 通過 — 觀察到 temperature 對 output token 的 variance、本機跑 $0")
+print("💡 中文 prompt 通常 input tokens 比 English 多（中文 token 化通常一字 ≈ 2 tokens）")
+```
+
+**預期輸出**（樣本）：
+```
+[中文] prompt: 用一句話描述一隻貓在做什麼。
+  input tokens: 32
+  output tokens — min=18 max=58 mean=35.2 stdev=11.4
+
+✅ 練習 2 通過 — 觀察到 temperature 對 output token 的 variance、本機跑 $0
+```
+
+</details>
+
 <details>
-<summary>📋 <b>起手碼</b>（複製到 <code>practice_2.py</code>）</summary>
+<summary>📋 <b>起手碼 — Path B（Anthropic API、選擇性）</b>（複製到 <code>practice_2_anthropic.py</code>）</summary>
 
 ```python
 # 需要：pip install anthropic
@@ -144,53 +195,82 @@ if hasattr(sys.stdout, "reconfigure"):
 import anthropic
 
 client = anthropic.Anthropic()
+PROMPTS = {"中文": "用一句話描述一隻貓在做什麼。", "English": "Describe in one sentence what a cat is doing."}
 
-PROMPTS = {
-    "中文": "用一句話描述一隻貓在做什麼。",
-    "English": "Describe in one sentence what a cat is doing.",
-}
-
-N = 20  # 跑 100 太貴、先 20。確認 OK 再加大
 for label, prompt in PROMPTS.items():
     output_tokens = []
-    for _ in range(N):
-        msg = client.messages.create(
-            model="claude-haiku-4-5",
-            max_tokens=80,
-            temperature=1.0,  # 故意拉高、看 variance
-            messages=[{"role": "user", "content": prompt}],
-        )
+    for _ in range(20):
+        msg = client.messages.create(model="claude-haiku-4-5", max_tokens=80, temperature=1.0,
+                                     messages=[{"role": "user", "content": prompt}])
         output_tokens.append(msg.usage.output_tokens)
-    print(f"\n[{label}] prompt: {prompt}")
-    print(f"  input tokens: {msg.usage.input_tokens}")
-    print(f"  output tokens — min={min(output_tokens)} max={max(output_tokens)} mean={statistics.mean(output_tokens):.1f} stdev={statistics.stdev(output_tokens):.1f}")
-
-# === 自我驗證 ===
-# 期望：temperature=1.0 下、stdev 應該 > 0（每次答案不一樣）
-print("\n✅ 練習 2 通過 — 觀察到 temperature 對 output token 的 variance")
-print("💡 中文 prompt 通常 input tokens 比 English 多 (中文一個字常 = 2 tokens)")
+    print(f"[{label}] input={msg.usage.input_tokens} output min/max/mean={min(output_tokens)}/{max(output_tokens)}/{sum(output_tokens)/len(output_tokens):.1f}")
 ```
 
-> 🦙 **Ollama 對照**：把 `client.messages.create(...)` 換成 OpenAI-compatible 的 `client.chat.completions.create(...)`、`msg.usage.output_tokens` 換 `r.usage.completion_tokens`。完整 Path B 範式見練習 1。
+**主要差異**：`client.messages.create()` → `client.chat.completions.create()`；`usage.output_tokens` → `usage.completion_tokens`；`usage.input_tokens` → `usage.prompt_tokens`。**成本**：40 次 ≈ $0.01。
+
+</details>
+
+### 練習 3：Pricing / Latency
+**Cost-sensitive 工作**必修：算出你的 hello-world prompt 跑 1000 次在不同 model 上的成本。Ollama 本機是 $0 但有 latency 成本；Cloud LLM 有 $ 成本但快。**會算這兩個 trade-off 才能挑對 model**。
+
+<details open>
+<summary>📋 <b>起手碼 — Path A（本機 Ollama gemma3n:e4b、量 latency）</b>（複製到 <code>practice_3.py</code>）</summary>
+
+```python
+# 需要：pip install openai
+# 前置：ollama pull gemma3n:e4b && ollama serve
+import sys, time
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
+from openai import OpenAI
+
+client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
+
+# 量 5 次 latency
+latencies = []
+for _ in range(5):
+    t0 = time.time()
+    r = client.chat.completions.create(
+        model="gemma3n:e4b",
+        max_tokens=200,
+        messages=[{"role": "user", "content": "你好！自我介紹一下。"}],
+    )
+    latencies.append(time.time() - t0)
+
+# 統計
+avg_latency = sum(latencies) / len(latencies)
+out_tok_avg = r.usage.completion_tokens  # 末次當代表
+tps = out_tok_avg / avg_latency if avg_latency > 0 else 0
+
+print(f"model: gemma3n:e4b (本機)")
+print(f"5 次 latency (sec): min={min(latencies):.2f} max={max(latencies):.2f} mean={avg_latency:.2f}")
+print(f"avg output: {out_tok_avg} tokens、約 {tps:.1f} tokens/sec")
+print(f"\n1000 次成本: $0 (本機)、預計時長: {avg_latency * 1000 / 60:.1f} 分鐘")
+
+# === 自我驗證 ===
+assert avg_latency > 0, "latency 應 > 0"
+assert out_tok_avg > 0, "output token 應 > 0"
+print(f"\n✅ 練習 3 通過 — 本機 model $0 但要花 {avg_latency * 1000 / 60:.0f} 分鐘跑 1000 次")
+print("💡 對照 Path B Anthropic：1000 次只要 ~10-20 分鐘但要 $0.25（haiku）")
+```
 
 **預期輸出**（樣本）：
 ```
-[中文] prompt: 用一句話描述一隻貓在做什麼。
-  input tokens: 26
-  output tokens — min=15 max=42 mean=28.4 stdev=7.2
+model: gemma3n:e4b (本機)
+5 次 latency (sec): min=4.21 max=8.93 mean=6.54
+avg output: 48 tokens、約 7.3 tokens/sec
 
-[English] prompt: Describe in one sentence what a cat is doing.
-  input tokens: 17
-  output tokens — min=12 max=38 mean=22.1 stdev=6.8
+1000 次成本: $0 (本機)、預計時長: 109.0 分鐘
+
+✅ 練習 3 通過 — 本機 model $0 但要花 109 分鐘跑 1000 次
+💡 對照 Path B Anthropic：1000 次只要 ~10-20 分鐘但要 $0.25（haiku）
 ```
 
 </details>
 
-### 練習 3：Pricing
-算出你的 hello-world prompt 跑 1000 次的實際美金成本。用 Anthropic 的 pricing page + SDK 的 `usage` 欄位來算 token。
-
 <details>
-<summary>📋 <b>起手碼</b>（複製到 <code>practice_3.py</code>）</summary>
+<summary>📋 <b>起手碼 — Path B（Anthropic API、算 $ 成本）</b>（複製到 <code>practice_3_anthropic.py</code>）</summary>
 
 ```python
 # 需要：pip install anthropic
@@ -210,49 +290,35 @@ PRICING = {
 client = anthropic.Anthropic()
 MODEL = "claude-haiku-4-5"
 
-# 跑一次 hello world、量 token
-msg = client.messages.create(
-    model=MODEL,
-    max_tokens=200,
-    messages=[{"role": "user", "content": "你好！自我介紹一下。"}],
-)
-in_tok = msg.usage.input_tokens
-out_tok = msg.usage.output_tokens
+msg = client.messages.create(model=MODEL, max_tokens=200,
+                             messages=[{"role": "user", "content": "你好！自我介紹一下。"}])
+in_tok, out_tok = msg.usage.input_tokens, msg.usage.output_tokens
 rates = PRICING[MODEL]
-
-# 算單次跟 1000 次成本
 cost_one = (in_tok * rates["input"] + out_tok * rates["output"]) / 1_000_000
-cost_1000 = cost_one * 1000
 
 print(f"model: {MODEL}")
-print(f"single call: input={in_tok} output={out_tok} → ${cost_one:.6f}")
-print(f"1000 calls:   ${cost_1000:.4f}")
-
-# 對照其他 model 的 1000 次成本（同樣 token 數）
-print("\n換算到其他 model 同樣 token 量：")
+print(f"single: input={in_tok} output={out_tok} → ${cost_one:.6f}")
+print(f"1000 calls cost across model tiers:")
 for name, r in PRICING.items():
     c = (in_tok * r["input"] + out_tok * r["output"]) / 1_000_000 * 1000
-    print(f"  {name:<22} 1000 calls: ${c:.4f}")
+    print(f"  {name:<22} ${c:.4f}")
 
 # === 自我驗證 ===
-assert cost_1000 > 0, "成本應 > 0"
-assert cost_1000 < 10, f"1000 次 haiku hello world 不應該 > $10、實際 ${cost_1000:.4f}"
-print(f"\n✅ 練習 3 通過 — 你已能用 usage + pricing 算實際成本")
+assert cost_one > 0, "Cloud LLM 一定有成本"
+print(f"\n✅ 練習 3 通過（Anthropic）— 1000 次 haiku ≈ $0.25、sonnet ≈ $0.76、opus ≈ $3.81")
 ```
 
-> 🦙 **Ollama 對照**：本機 model 沒有計價、`cost_1000 = 0`、但可以印 latency 對照（`time.time() - t0`）。Pricing 概念在 Stage 7 接 production 才會重要、Ollama path 這題跳過或改算「自家電費」。
-
-**預期輸出**（樣本、實際 $ 依模型計價而定）：
+**預期輸出**：
 ```
 model: claude-haiku-4-5
-single call: input=14 output=48 → $0.000254
-1000 calls:   $0.2540
-
-換算到其他 model 同樣 token 量：
-  claude-haiku-4-5       1000 calls: $0.2540
-  claude-sonnet-4-5      1000 calls: $0.7620
-  claude-opus-4-5        1000 calls: $3.8100
+single: input=14 output=48 → $0.000254
+1000 calls cost across model tiers:
+  claude-haiku-4-5       $0.2540
+  claude-sonnet-4-5      $0.7620
+  claude-opus-4-5        $3.8100
 ```
+
+**Trade-off 對照**：本機 Ollama 跑 1000 次免費但要 ~2 hr；Anthropic haiku ~10 min $0.25；sonnet ~10 min $0.76。**production 場景才考慮 cloud；學習 / 實驗 / debug 全用本機**。
 
 </details>
 
