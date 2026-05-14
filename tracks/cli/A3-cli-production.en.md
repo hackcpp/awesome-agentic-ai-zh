@@ -53,7 +53,7 @@ Package your `.claude/commands/` and `CLAUDE.md` into a plugin, publish to inter
 - Skill / plugin details in [Stage 5.3 + 5.4](../../stages/05-claude-code-ecosystem.en.md)
 - Template: [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official)
 
-## 🧭 Advanced Concepts in Daily CLI Work (6 Playbooks)
+## 🧭 Advanced Concepts in Daily CLI Work (6 Playbooks) 🆕
 
 Track A users are **already using** [Stage 7.5 advanced concepts](../../stages/07.5-advanced-agentic-concepts.en.md) — they just have not named them yet. These 6 playbooks do not teach the concepts; they **tell you "in this situation, do this"** — each in ≤ 6 lines. **Want the deeper theory → go to Stage 7.5.**
 
@@ -65,9 +65,12 @@ Track A users are **already using** [Stage 7.5 advanced concepts](../../stages/0
 - **Do**: At the top of the brief, state "change X / do not cross Y" explicitly; add a path filter to the acceptance preset
 - **Concepts**: Work Boundary + Hierarchical Task Decomposition · 📊 See [concept-cluster](../../resources/diagrams/concept-cluster.en.png), Service × orchestration cluster
 - **Read more**:
-  - [HumanLayer — Writing a good CLAUDE.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md) — under 300 lines; hooks enforce 100% vs CLAUDE.md at 70%
-  - [Anthropic — How Anthropic teams use Claude Code (PDF)](https://www-cdn.anthropic.com/58284b19e702b49db9302d5b6f135ad8871e7658.pdf) — real-world delegation rules
-  - Internal: [Stage 7.5 §🧭 work boundary stack](../../stages/07.5-advanced-agentic-concepts.en.md#-core-mental-model-the-four-layer-work-boundary)
+
+  | Source | Link |
+  |---|---|
+  | HumanLayer | [Writing a good CLAUDE.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md) |
+  | Anthropic | [How Anthropic teams use Claude Code (PDF)](https://www-cdn.anthropic.com/58284b19e702b49db9302d5b6f135ad8871e7658.pdf) |
+  | Internal | [Stage 7.5 🧭 work boundary stack](../../stages/07.5-advanced-agentic-concepts.en.md#-core-mental-model-the-four-layer-work-boundary) |
 
 ### 📋 Playbook 2: Multi-agent parallel runs, results conflict
 
@@ -75,9 +78,12 @@ Track A users are **already using** [Stage 7.5 advanced concepts](../../stages/0
 - **Do**: Give each agent its own commit; use a reviewer pattern to catch drift (not one giant merge); standardize the brief format + `result.json` schema
 - **Concepts**: Contract Hand-offs + Speculative Parallel · 📊 See [concept-cluster](../../resources/diagrams/concept-cluster.en.png), Service × orchestration + Types × orchestration
 - **Read more**:
-  - [Addy Osmani — Code Agent Orchestra](https://addyosmani.com/blog/code-agent-orchestra/) — orchestrator mindset, not a pair-programmer mindset
-  - [Daniel Vaughan — Running Multiple Codex Agents Parallel](https://codex.danielvaughan.com/2026/04/18/running-multiple-codex-agents-parallel-orchestration/) — worktree-per-agent
-  - [agent-collab-skills](https://github.com/WenyuChiou/agent-collab-skills) `agent-task-splitter` + `agent-output-reconciler`
+
+  | Source | Link |
+  |---|---|
+  | Addy Osmani | [Code Agent Orchestra](https://addyosmani.com/blog/code-agent-orchestra/) |
+  | Daniel Vaughan | [Running Multiple Codex Agents Parallel](https://codex.danielvaughan.com/2026/04/18/running-multiple-codex-agents-parallel-orchestration/) |
+  | Internal | [agent-collab-skills](https://github.com/WenyuChiou/agent-collab-skills) (`agent-task-splitter` + `agent-output-reconciler`) |
 
 ### 📋 Playbook 3: Reviewing agent output
 
@@ -85,9 +91,12 @@ Track A users are **already using** [Stage 7.5 advanced concepts](../../stages/0
 - **Do**: Add an LLM-as-judge subagent for automatic evaluation (binary pass/fail); humans only spot-check edge cases; run the acceptance-gate preset before commit
 - **Concepts**: Agent-as-Judge + Plan-Act-Reflect · 📊 See [reading-decision-tree](../../resources/diagrams/reading-decision-tree.en.png), blue eval branch
 - **Read more**:
-  - [Hamel Husain — LLM-as-a-Judge: Complete Guide](https://hamel.dev/blog/posts/llm-judge/) — why binary beats Likert
-  - [Hamel Husain — Your AI Product Needs Evals](https://hamel.dev/blog/posts/evals/) — evals as production discipline
-  - [Simon Willison — Sub-agents in Claude Code](https://simonwillison.net/2025/Oct/11/sub-agents/) — fresh-context dispatch pattern
+
+  | Source | Link |
+  |---|---|
+  | Hamel Husain | [LLM-as-a-Judge: Complete Guide](https://hamel.dev/blog/posts/llm-judge/) |
+  | Hamel Husain | [Your AI Product Needs Evals](https://hamel.dev/blog/posts/evals/) |
+  | Simon Willison | [Sub-agents in Claude Code](https://simonwillison.net/2025/Oct/11/sub-agents/) |
 
 ### 📋 Playbook 4: Running CLI agent in CI
 
@@ -95,9 +104,12 @@ Track A users are **already using** [Stage 7.5 advanced concepts](../../stages/0
 - **Do**: Use layered autonomy (preset auto-runs / commit requires review / push requires human sign-off); set a fallback cheaper model (if Opus is down, fall back to Haiku)
 - **Concepts**: Autonomy Gradients + Graceful Degradation · 📊 See [concept-cluster](../../resources/diagrams/concept-cluster.en.png), Config × governance cluster
 - **Read more**:
-  - [Anthropic — How Anthropic teams use Claude Code (PDF)](https://www-cdn.anthropic.com/58284b19e702b49db9302d5b6f135ad8871e7658.pdf) §"when subagents pay off"
-  - [Anthropic Engineering — Equipping Agents with Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) §skills in CI
-  - Internal: [Stage 5.5 Subagents](../../stages/05-claude-code-ecosystem.en.md#55--subagents-claude-codes-native-multi-agent-mechanism--2025-new-feature) + Exercise CLI-10 (above in this stage)
+
+  | Source | Link |
+  |---|---|
+  | Anthropic | [How Anthropic teams use Claude Code (PDF)](https://www-cdn.anthropic.com/58284b19e702b49db9302d5b6f135ad8871e7658.pdf) |
+  | Anthropic Engineering | [Equipping Agents with Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) |
+  | Internal | [Stage 5.5 Subagents](../../stages/05-claude-code-ecosystem.en.md#55--subagents-claude-codes-native-multi-agent-mechanism--2025-new-feature) + Exercise CLI-10 |
 
 ### 📋 Playbook 5: Controlling cost
 
@@ -105,9 +117,12 @@ Track A users are **already using** [Stage 7.5 advanced concepts](../../stages/0
 - **Do**: Set `max_cost_usd` in `plan.yml`; use a cheap model (Haiku) for exploration and an expensive model (Opus) only for polish; turn on prompt caching (90% discount); automate QA instead of spending human time
 - **Concepts**: Cost-aware Budget Gates + Throughput-Merge Philosophy · 📊 See [concept-cluster](../../resources/diagrams/concept-cluster.en.png), Config × resilience cluster
 - **Read more**:
-  - [Simon Willison — Sub-agents](https://simonwillison.net/2025/Oct/11/sub-agents/) — Haiku for explore mode
-  - [Anthropic — Prompt Caching](https://www.anthropic.com/news/prompt-caching) — 90% cost reduction
-  - Internal: this stage's **Exercise CLI-11** (token tracking + langfuse integration)
+
+  | Source | Link |
+  |---|---|
+  | Simon Willison | [Sub-agents](https://simonwillison.net/2025/Oct/11/sub-agents/) |
+  | Anthropic | [Prompt Caching](https://www.anthropic.com/news/prompt-caching) |
+  | Internal | This stage's Exercise CLI-11 (token tracking + langfuse integration) |
 
 ### 📋 Playbook 6: Hardening workflow, preventing drift
 
@@ -115,9 +130,12 @@ Track A users are **already using** [Stage 7.5 advanced concepts](../../stages/0
 - **Do**: Intentionally break one rule and run the acceptance gate to see whether it catches it (chaos test); treat `docs/` as the single source of truth and keep `CLAUDE.md` as an entry map only
 - **Concepts**: Failure Injection + System of Record · 📊 See [failure-lifecycle](../../resources/diagrams/failure-lifecycle.en.png) (the F11-F14 evolution loop)
 - **Read more**:
-  - [HumanLayer — Writing a good CLAUDE.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md) — hooks enforce 100% vs CLAUDE.md 70%
-  - [agent-collab-skills — observed-failure-modes.md](https://github.com/WenyuChiou/agent-collab-skills/blob/main/docs/observed-failure-modes.md) — F1-F14 case study
-  - Internal: [Stage 7.5 §🔁 failure-mode lifecycle](../../stages/07.5-advanced-agentic-concepts.en.md#-failure-mode-lifecycle-how-f11-f14-evolved)
+
+  | Source | Link |
+  |---|---|
+  | HumanLayer | [Writing a good CLAUDE.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md) |
+  | agent-collab-skills | [observed-failure-modes.md](https://github.com/WenyuChiou/agent-collab-skills/blob/main/docs/observed-failure-modes.md) |
+  | Internal | [Stage 7.5 🔁 failure-mode lifecycle](../../stages/07.5-advanced-agentic-concepts.en.md#-failure-mode-lifecycle-how-f11-f14-evolved) |
 
 ---
 

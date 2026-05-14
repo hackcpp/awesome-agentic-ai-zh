@@ -53,7 +53,7 @@ CLI 跑得顺了之后，下一步：**把它接到你的真实工作流程里**
 - Skill / plugin 细节见 [Stage 5.3 + 5.4](../../stages/05-claude-code-ecosystem.zh-Hans.md)
 - 范本：[anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official)
 
-## 🧭 进阶概念在 CLI 日常工作中的应用（6 个 playbooks）
+## 🧭 进阶概念在 CLI 日常工作中的应用（6 个 playbooks）🆕
 
 Track A 的人**已经在用** [Stage 7.5 的进阶概念](../../stages/07.5-advanced-agentic-concepts.zh-Hans.md)，只是没给它命名。下面 6 个 playbook 不是教概念，而是**告诉你“什么情境该做什么”**——每个 ≤ 6 行。**想深挖原理 → 进 Stage 7.5。**
 
@@ -65,9 +65,12 @@ Track A 的人**已经在用** [Stage 7.5 的进阶概念](../../stages/07.5-adv
 - **Do**：brief 开头明写“动 X / 不能跨 Y”，acceptance preset 加 path filter
 - **Concepts**：Work Boundary + Hierarchical Task Decomposition · 📊 图见 [concept-cluster](../../resources/diagrams/concept-cluster.zh-Hans.png) Service × 编排 cluster
 - **Read more**：
-  - [HumanLayer — Writing a good CLAUDE.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md) — < 300 行，hooks enforce 100% vs CLAUDE.md 70%
-  - [Anthropic — How Anthropic teams use Claude Code (PDF)](https://www-cdn.anthropic.com/58284b19e702b49db9302d5b6f135ad8871e7658.pdf) — 真实 delegation 规范
-  - 内部：[Stage 7.5 §🧭 work boundary stack](../../stages/07.5-advanced-agentic-concepts.zh-Hans.md#-核心-mental-model四层工作边界work-boundary)
+
+  | Source | Link |
+  |---|---|
+  | HumanLayer | [Writing a good CLAUDE.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md) |
+  | Anthropic | [How Anthropic teams use Claude Code (PDF)](https://www-cdn.anthropic.com/58284b19e702b49db9302d5b6f135ad8871e7658.pdf) |
+  | 内部 | [Stage 7.5 🧭 work boundary stack](../../stages/07.5-advanced-agentic-concepts.zh-Hans.md#-核心-mental-model四层工作边界work-boundary) |
 
 ### 📋 Playbook 2：多 agent 并行，结果乱
 
@@ -75,9 +78,12 @@ Track A 的人**已经在用** [Stage 7.5 的进阶概念](../../stages/07.5-adv
 - **Do**：每个 agent 自己一个 commit，用 reviewer pattern 抓 drift（不是大合一）；brief 统一 task format + result.json schema
 - **Concepts**：Contract Hand-offs + Speculative Parallel · 📊 图见 [concept-cluster](../../resources/diagrams/concept-cluster.zh-Hans.png) Service × 编排 + Types × 编排
 - **Read more**：
-  - [Addy Osmani — Code Agent Orchestra](https://addyosmani.com/blog/code-agent-orchestra/) — orchestrator mindset，不要 pair-programmer 心态
-  - [Daniel Vaughan — Running Multiple Codex Agents Parallel](https://codex.danielvaughan.com/2026/04/18/running-multiple-codex-agents-parallel-orchestration/) — worktree-per-agent
-  - [agent-collab-skills](https://github.com/WenyuChiou/agent-collab-skills) `agent-task-splitter` + `agent-output-reconciler`
+
+  | Source | Link |
+  |---|---|
+  | Addy Osmani | [Code Agent Orchestra](https://addyosmani.com/blog/code-agent-orchestra/) |
+  | Daniel Vaughan | [Running Multiple Codex Agents Parallel](https://codex.danielvaughan.com/2026/04/18/running-multiple-codex-agents-parallel-orchestration/) |
+  | 内部 | [agent-collab-skills](https://github.com/WenyuChiou/agent-collab-skills)（`agent-task-splitter` + `agent-output-reconciler`） |
 
 ### 📋 Playbook 3：Review agent 输出
 
@@ -85,9 +91,12 @@ Track A 的人**已经在用** [Stage 7.5 的进阶概念](../../stages/07.5-adv
 - **Do**：加 LLM-as-judge subagent 自动评（binary pass/fail），人类只 spot-check edge case；commit 前跑 acceptance-gate preset
 - **Concepts**：Agent-as-Judge + Plan-Act-Reflect · 📊 图见 [reading-decision-tree](../../resources/diagrams/reading-decision-tree.zh-Hans.png) 蓝色 eval 分支
 - **Read more**：
-  - [Hamel Husain — LLM-as-a-Judge: Complete Guide](https://hamel.dev/blog/posts/llm-judge/) — 为什么 binary 比 Likert 好
-  - [Hamel Husain — Your AI Product Needs Evals](https://hamel.dev/blog/posts/evals/) — eval as production 纪律
-  - [Simon Willison — Sub-agents in Claude Code](https://simonwillison.net/2025/Oct/11/sub-agents/) — fresh context dispatch pattern
+
+  | Source | Link |
+  |---|---|
+  | Hamel Husain | [LLM-as-a-Judge: Complete Guide](https://hamel.dev/blog/posts/llm-judge/) |
+  | Hamel Husain | [Your AI Product Needs Evals](https://hamel.dev/blog/posts/evals/) |
+  | Simon Willison | [Sub-agents in Claude Code](https://simonwillison.net/2025/Oct/11/sub-agents/) |
 
 ### 📋 Playbook 4：在 CI 里跑 CLI agent
 
@@ -95,9 +104,12 @@ Track A 的人**已经在用** [Stage 7.5 的进阶概念](../../stages/07.5-adv
 - **Do**：分层 autonomy（preset 自动跑 / commit 需审 / push 需人签），设 fallback 便宜 model（Opus 挂了就 fallback Haiku）
 - **Concepts**：Autonomy Gradients + Graceful Degradation · 📊 图见 [concept-cluster](../../resources/diagrams/concept-cluster.zh-Hans.png) Config × 治理 cluster
 - **Read more**：
-  - [Anthropic — How Anthropic teams use Claude Code (PDF)](https://www-cdn.anthropic.com/58284b19e702b49db9302d5b6f135ad8871e7658.pdf) §"when subagents pay off"
-  - [Anthropic Engineering — Equipping Agents with Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) §skills 在 CI
-  - 内部：[Stage 5.5 Subagents](../../stages/05-claude-code-ecosystem.zh-Hans.md#55--subagentsclaude-code-原生-multi-agent-机制-2025-新功能) + 动手练习 CLI-10（本 stage 上方）
+
+  | Source | Link |
+  |---|---|
+  | Anthropic | [How Anthropic teams use Claude Code (PDF)](https://www-cdn.anthropic.com/58284b19e702b49db9302d5b6f135ad8871e7658.pdf) |
+  | Anthropic Engineering | [Equipping Agents with Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) |
+  | 内部 | [Stage 5.5 Subagents](../../stages/05-claude-code-ecosystem.zh-Hans.md#55--subagentsclaude-code-原生-multi-agent-机制-2025-新功能) + 动手练习 CLI-10 |
 
 ### 📋 Playbook 5：控制成本
 
@@ -105,9 +117,12 @@ Track A 的人**已经在用** [Stage 7.5 的进阶概念](../../stages/07.5-adv
 - **Do**：`plan.yml` 设 `max_cost_usd`，便宜 model（Haiku）跑探索 / 贵 model（Opus）只跑 polish；开 prompt caching（90% 折扣）；自动化 QA（不靠人时间）
 - **Concepts**：Cost-aware Budget Gates + Throughput-Merge Philosophy · 📊 图见 [concept-cluster](../../resources/diagrams/concept-cluster.zh-Hans.png) Config × 韧性 cluster
 - **Read more**：
-  - [Simon Willison — Sub-agents](https://simonwillison.net/2025/Oct/11/sub-agents/) — Haiku for Explore 模式
-  - [Anthropic — Prompt Caching](https://www.anthropic.com/news/prompt-caching) — 90% 成本降
-  - 内部：本 stage **动手练习 CLI-11**（token tracking + langfuse 集成）
+
+  | Source | Link |
+  |---|---|
+  | Simon Willison | [Sub-agents](https://simonwillison.net/2025/Oct/11/sub-agents/) |
+  | Anthropic | [Prompt Caching](https://www.anthropic.com/news/prompt-caching) |
+  | 内部 | 本 stage 动手练习 CLI-11（token tracking + langfuse 集成） |
 
 ### 📋 Playbook 6：强化 workflow，防 drift
 
@@ -115,9 +130,12 @@ Track A 的人**已经在用** [Stage 7.5 的进阶概念](../../stages/07.5-adv
 - **Do**：故意 break 一条 rule 跑 acceptance gate 看抓不抓得到（chaos test）；`docs/` 当 single source，CLAUDE.md 只当 entry map
 - **Concepts**：Failure Injection + System of Record · 📊 图见 [failure-lifecycle](../../resources/diagrams/failure-lifecycle.zh-Hans.png)（F11-F14 进化循环）
 - **Read more**：
-  - [HumanLayer — Writing a good CLAUDE.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md) — hooks enforce 100% vs CLAUDE.md 70%
-  - [agent-collab-skills — observed-failure-modes.md](https://github.com/WenyuChiou/agent-collab-skills/blob/main/docs/observed-failure-modes.md) — F1-F14 case study
-  - 内部：[Stage 7.5 §🔁 failure-mode lifecycle](../../stages/07.5-advanced-agentic-concepts.zh-Hans.md#-failure-mode-lifecyclef11-f14-怎么进化的)
+
+  | Source | Link |
+  |---|---|
+  | HumanLayer | [Writing a good CLAUDE.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md) |
+  | agent-collab-skills | [observed-failure-modes.md](https://github.com/WenyuChiou/agent-collab-skills/blob/main/docs/observed-failure-modes.md) |
+  | 内部 | [Stage 7.5 🔁 failure-mode lifecycle](../../stages/07.5-advanced-agentic-concepts.zh-Hans.md#-failure-mode-lifecyclef11-f14-怎么进化的) |
 
 ---
 
