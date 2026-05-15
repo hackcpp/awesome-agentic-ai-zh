@@ -4,6 +4,8 @@
 
 ⏱ **Time estimate**: 3-4 weeks (~15-25 hours)
 
+> 🚪 **Entry condition** (shared hub — differs by track): **Track A (CLI Power User)** arrives from A1-A2 — knowing Python + having run a basic CLI is enough; start from 5.1/5.2. **Track B (Agent Builder)** should first complete [Stage 3](03-tool-use-and-hello-agent.en.md) (tool use) + [Stage 4](04-agent-frameworks.en.md) (agent frameworks), then read this whole stage as "how Claude Code works internally". Not sure which track? → see the 📌 two-track note below.
+
 > 💡 This entire stage revolves around 4 keywords (**MCP / Skills / Plugins / Marketplace**) → if you're not familiar with them, first check out [`resources/glossary.en.md` 5](../resources/glossary.en.md#5-claude-code-ecosystem).
 
 **👥 Shared Hub**: This stage is used by both Track A (CLI Power User) and Track B (Agent Builder). Stage 5 and [Stage 8 — Agent Interfaces](08-agent-interfaces.en.md) are the two central hubs of this curriculum.

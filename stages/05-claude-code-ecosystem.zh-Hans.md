@@ -4,6 +4,8 @@
 
 ⏱ **时间估算**：3-4 周（约 15-25 小时）
 
+> 🚪 **进入条件**（共用 hub、依 track 不同）：**Track A（CLI Power User）** 从 A1-A2 过来、会用 Python + 跑过基本 CLI 即可、从 5.1/5.2 起步；**Track B（Agent Builder）** 建议先完成 [Stage 3](03-tool-use-and-hello-agent.zh-Hans.md)（tool use）+ [Stage 4](04-agent-frameworks.zh-Hans.md)（agent frameworks）再进、把整个 stage 当「Claude Code 内部怎么运作」深读。不确定走哪条 → 看下面 📌 的两轨说明。
+
 > 💡 整个 stage 围绕 4 个关键词（**MCP / Skills / Plugins / Marketplace**）展开 → 不熟先翻 [`resources/glossary.zh-Hans.md` 5](../resources/glossary.zh-Hans.md#5-claude-code-生态)。
 
 **👥 共用 hub**：本 stage 是 Track A（CLI Power User）+ Track B（Agent Builder）两条路径的共用中心。Stage 5 跟 [Stage 8 — Agent Interfaces](08-agent-interfaces.zh-Hans.md) 是 curriculum 的两个 hub。

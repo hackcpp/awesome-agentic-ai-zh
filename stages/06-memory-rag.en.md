@@ -97,7 +97,8 @@ LLMs can use your private / domain data in three main ways. **This stage teaches
 ## 🚪 Prerequisites
 
 You should have already:
-- Completed Stage 3 (ability to write tool use, call LLM APIs, understand ReAct loop)
+- Completed Stage 3 (ability to write tool use, call LLM APIs, understand ReAct loop) — **hard technical prerequisite**
+- Walked through Stage 4 (agent frameworks) + Stage 5 (Claude Code ecosystem) — the curriculum main line is **3 → 4 → 5 → 6** (see the [README learning map](../README.md#️-7-stage-learning-map)); not a hard technical prerequisite, but RAG / memory often pairs with frameworks + Claude Code memory mechanisms so following the sequence gives a more complete understanding, and [Stage 7](07-multi-agent-production.md) expects you to have completed 4 + 5 + 6
 - Be able to run Python `pip install` to install SDKs (will use `chromadb`, `sentence-transformers`, etc. later)
 - Be comfortable with basic Python structures like lists, dicts, and generators.
 

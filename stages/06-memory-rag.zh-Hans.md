@@ -97,7 +97,8 @@ harness eng（Stage 7） → 工程模型外面的“runtime”
 ## 🚪 进入条件
 
 你应该已经：
-- 完成 Stage 3（会写 tool use、会调用 LLM API、能看懂 ReAct loop）
+- 完成 Stage 3（会写 tool use、会调用 LLM API、能看懂 ReAct loop）—— **硬性技术前置**
+- 走过 Stage 4（agent frameworks）+ Stage 5（Claude Code 生态）—— curriculum 主线是 **3 → 4 → 5 → 6**（见 [README 学习地图](../README.md#️-7-阶段学习地图)）；非硬性技术前置，但 RAG / memory 常跟 framework + Claude Code memory 机制搭配、照顺序走过理解更完整，且 [Stage 7](07-multi-agent-production.md) 预期你已完成 4 + 5 + 6
 - 能够运行 Python `pip install` 来安装 SDK（后续练习会用到 `chromadb`、`sentence-transformers` 等）
 - 熟悉 list / dict / generator 等基础 Python 结构
 
