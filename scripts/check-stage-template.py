@@ -17,6 +17,13 @@ EXPECTED — 缺則 warning（不擋）：
   - 🎯 X 是什麼（先定位）  — positioning section
   - 🎯 常用 .* 工具推薦 / 常用 .* 推薦 — tool recommendation
 
+  註：Stage 01-04 為 foundational 章節，其定位 / 工具推薦段落使用章節自然
+  命名（如「主流 LLM 家族對比」/「什麼是 multi-agent framework」/「開始前：
+  AI / LLM / Agent 三者怎麼分」），刻意不套用上面的 EXPECTED 樣板字串。
+  因此這些 ⚠ EXPECTED 警告對 Stage 01-04 屬「資訊性」而非缺陷——它們的
+  REQUIRED 段落全部通過，定位段落實質存在、只是用更貼切的章節名。不強制
+  改名（改名會把更精準的標題降級成樣板字串、得不償失）。
+
 排除：mirror files (*.en.md, *.zh-Hans.md)、Stage 0 (foundations 短 intro)。
 
 Usage:
