@@ -214,6 +214,7 @@ cd awesome-agentic-ai-zh
 | 你的狀況 | 去哪 | 內容 |
 |---|---|---|
 | 想動手寫 Skill / MCP server / 接 Word / Zotero / 本機 LLM | [`resources/cookbook.md`](resources/cookbook.md) | 6 個 step-by-step recipe、每個 30-50 分鐘 |
+| 想用 subagent 但不知該派誰、怎麼派、派什麼工作 | [`resources/subagent-cookbook.md`](resources/subagent-cookbook.md) | 15 個複製貼上即用的 dispatch recipe |
 | 卡在 tool calling（LLM 不呼叫 / schema 寫不好 / ReAct loop 跑不停） | [`examples/stage-5/tool-calling-tutor/`](examples/stage-5/tool-calling-tutor/) | 可裝進 Claude Code 的 skill、4-symptom diagnostic |
 | 動手練習怎麼正確使用（主動 vs 被動模式） | [`docs/HOW_TO_USE.md`](docs/HOW_TO_USE.md) | 5-10 分鐘讀完、配合每個 stage 用 |
 

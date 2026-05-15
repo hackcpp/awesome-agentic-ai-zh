@@ -150,7 +150,7 @@
 
 **選哪個**：要跨 LLM provider（GPT + Claude + Gemini 混用）或要把 multi-agent 包進別的應用程式 → framework path。已 commit Claude Code、只在 Claude 生態 → subagent path（少很多 boilerplate）。
 
-完整對照表見 [Stage 5.5 開頭](../stages/05-claude-code-ecosystem.md#55--subagentsclaude-code-原生-multi-agent-機制-2025-新功能)。
+完整對照表見 [Stage 5.5 開頭](../stages/05-claude-code-ecosystem.md#55--subagentsclaude-code-原生-multi-agent-機制-2025-新功能)；**想直接看 15 個 daily dispatch recipe** → [`subagent-cookbook.md`](./subagent-cookbook.md)（每個含情境 + 用哪個 subagent + 複製即用的 prompt 範本）。
 
 ---
 
