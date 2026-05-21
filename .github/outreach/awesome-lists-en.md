@@ -10,9 +10,8 @@
 
 | Target | Section to PR into | Notes |
 |---|---|---|
-| [e2b-dev/awesome-ai-agents](https://github.com/e2b-dev/awesome-ai-agents) | "Learning resources" / tutorials | Large, English builder audience, agent-focused |
-| [kyrolabs/awesome-agents](https://github.com/kyrolabs/awesome-agents) | learning / guides | Agent-specific; good fit |
-| [Shubhamsaboo/awesome-llm-apps](https://github.com/Shubhamsaboo/awesome-llm-apps) | tutorials / learning | Huge reach; check it has a learning section, not just apps |
+| [kyrolabs/awesome-agents](https://github.com/kyrolabs/awesome-agents) | learning / guides | Agent-specific. Verified live 2026-05-21 (★2.3k, pushed 3d prior) — good fit |
+| [Shubhamsaboo/awesome-llm-apps](https://github.com/Shubhamsaboo/awesome-llm-apps) | tutorials / learning | ★111k reach, but it is an *apps* list — confirm it has a learning/tutorials section before PR, else it gets rejected as out-of-scope |
 | [punkpeye/awesome-mcp-servers](https://github.com/punkpeye/awesome-mcp-servers) | Tutorials | ALREADY in progress (PR #6135, see channel-partners.md #6) — don't double-submit |
 | [travisvn/awesome-claude-skills](https://github.com/travisvn/awesome-claude-skills) | 📖 Tutorials & Guides | ALREADY tracked (channel-partners.md #9) — don't double-submit |
 
@@ -54,5 +53,8 @@ Rendered site: https://wenyuchiou.github.io/awesome-agentic-ai-zh/
 ## Don'ts
 - ❌ Don't PR to a list whose CONTRIBUTING forbids "roadmap/aggregate" entries — read it first.
 - ❌ Don't double-submit to punkpeye / travisvn (already tracked).
+- ❌ Don't PR to `e2b-dev/awesome-ai-agents` — verified 2026-05-21, last
+  push 2025-02-26 (~15 months stale / effectively abandoned); a PR there
+  will not be merged. Removed from the target table for this reason.
 - ❌ Don't omit the "trilingual / English-maintained" note — the `-zh`
   name otherwise gets it mis-filed or rejected as out-of-scope.

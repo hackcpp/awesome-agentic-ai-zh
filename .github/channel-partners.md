@@ -26,12 +26,12 @@
 | 2 | [liyupi/ai-guide](outreach/liyupi.md) | GitHub PR | not contacted | — | — | — | ★13k mainland resource hub |
 | 3 | [HuggingFace 中文社群](outreach/huggingface-zh.md) | HF community/discuss | not contacted | — | — | — | English ecosystem hub w/ growing zh segment |
 | 4 | [LangChain (kyrolabs/awesome-langchain)](outreach/langchain-ai.md) | GitHub PR | not contacted | — | — | — | Stage 4 covers LangChain; §11 lists Langchain-Chatchat |
-| 5 | [hesreallyhim/awesome-claude-code](outreach/awesome-claude-code.md) | GitHub **issue** | not contacted | — | — | — | ⚠️ Repo mid-reorg — open issue (not PR), park for new TOC |
+| 5 | [hesreallyhim/awesome-claude-code](outreach/awesome-claude-code.md) | GitHub **issue** | not contacted | — | — | — | ⚠️ Reorg STILL incomplete (verified 2026-05-21: README TOC is a placeholder; resources now live in `THE_RESOURCES_TABLE.csv` + a submission template). Keep parked — do not spend a send here yet |
 | 6 | [punkpeye/awesome-mcp-servers](outreach/awesome-mcp-servers.md) | GitHub PR | contacted | 2026-05-09 | — | — | [PR #6135](https://github.com/punkpeye/awesome-mcp-servers/pull/6135). 2026-05-10: addressed bot name-check ([6f711ec](https://github.com/WenyuChiou/awesome-mcp-servers/commit/6f711ec3)) + replied to glama/emoji bot warnings ([comment](https://github.com/punkpeye/awesome-mcp-servers/pull/6135#issuecomment-4416517075)). Awaiting punkpeye human review. |
 | 7 | [Zhipu BigModel community](outreach/zhipu.md) | dev community / 知乎 | not contacted | — | — | — | Inviting them to PR a Zhipu agent entry to §11 |
 | 8 | [Moonshot Kimi](outreach/moonshot.md) | dev community / 知乎 | not contacted | — | — | — | Inviting them to PR a Kimi agent entry to §11 |
-| 9 | [travisvn/awesome-claude-skills](https://github.com/travisvn/awesome-claude-skills) | GitHub PR | not contacted | — | — | — | ★12k, pushed 12d ago. Has explicit `## 📖 Tutorials & Guides` section — **perfect fit**. Use awesome-mcp-servers template, swap section name |
-| 10 | [WangRongsheng/awesome-LLM-resources](https://github.com/WangRongsheng/awesome-LLM-resources) | GitHub PR | not contacted | — | — | — | ★8k, Apache-2.0, pushed today. Has `## 智能体 Agents` + `## 研究 Research` sections. PR to 智能体 section makes sense |
+| 9 | [travisvn/awesome-claude-skills](https://github.com/travisvn/awesome-claude-skills) | GitHub PR | not contacted | — | — | — | ★12.7k, verified 2026-05-21. Target = `### Written Tutorials` under `## 📖 Tutorials & Guides`. Fit is MODERATE not perfect — the list is Claude-Skills-specific; frame the PR around Stage 5 (Claude Code ecosystem: Skills / MCP / plugins / subagents), not the general roadmap |
+| 10 | [WangRongsheng/awesome-LLM-resources](https://github.com/WangRongsheng/awesome-LLM-resources) | GitHub PR | not contacted | — | — | — | ★8.4k, verified 2026-05-21 (maintainer active — pushed within 1d). Target = `## 课程 Course` (sits beside mlabonne/llm-course + microsoft/generative-ai-for-beginners — analogous roadmap repos). NOT `## 智能体 Agents` — that section is agent frameworks/tools only |
 | 11 | [AiHubCN/Awesome-Chinese-LLM](https://github.com/AiHubCN/Awesome-Chinese-LLM) | GitHub PR | not contacted | — | — | — | ★22k, pushed today, no license (yellow flag). Long TOC — need to browse README before deciding section. Lower priority due to license uncertainty |
 
 ## Sequencing rule
@@ -118,7 +118,7 @@ de-zh-gated (commit b4bb862). Drafts ready — maintainer posts manually.
 | E4 | r/ClaudeAI | Reddit self-post | not contacted | [reddit.md](outreach/reddit.md) | Ecosystem-depth variant |
 | E5 | r/learnmachinelearning | Reddit self-post | not contacted | [reddit.md](outreach/reddit.md) | Resource-framing variant |
 | E6 | TLDR AI / Ben's Bites / Latent Space / LWiAI | Newsletter tip | not contacted | [newsletters-en.md](outreach/newsletters-en.md) | Submit AFTER a HN/Reddit signal to reference |
-| E7 | e2b-dev/awesome-ai-agents · kyrolabs/awesome-agents · Shubhamsaboo/awesome-llm-apps | GitHub PR | not contacted | [awesome-lists-en.md](outreach/awesome-lists-en.md) | Passive; PR desc MUST state "trilingual/EN-maintained" or `-zh` gets mis-filed |
+| E7 | kyrolabs/awesome-agents · Shubhamsaboo/awesome-llm-apps | GitHub PR | not contacted | [awesome-lists-en.md](outreach/awesome-lists-en.md) | Passive; PR desc MUST state "trilingual/EN-maintained" or `-zh` gets mis-filed. (e2b-dev/awesome-ai-agents dropped 2026-05-21 — ~15-month-stale, see awesome-lists-en.md Don'ts) |
 
 ### English sequencing rule
 
