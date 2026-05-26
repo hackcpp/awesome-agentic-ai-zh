@@ -74,10 +74,63 @@ python scripts/check-catalog-staleness.py --check
 
 依賴：`gh` CLI（`gh auth login`）
 
+## `snapshot-traffic.py` — 每週把 traffic 14-day window 留檔
+
+`gh api repos/<repo>/traffic/views`（跟 clones）只回**最近 14 天**、過了就抓不回來。
+本 script 抓 14-day rolling totals + 每日明細 + top referrers + top paths + 點時間 totals
+（stars/forks/open_issues/subscribers）、寫到 `docs/traffic/snapshots/YYYY-MM-DD.json`。
+每檔 ~5 KB。
+
+```bash
+# 寫今天的 snapshot
+python scripts/snapshot-traffic.py
+
+# 試跑印 JSON 不寫
+python scripts/snapshot-traffic.py --dry-run
+
+# 自訂位置（譬如 CI artifact）
+python scripts/snapshot-traffic.py --out /tmp/traffic.json
+```
+
+需要對 repo 有 push 權限（traffic API 限制）。詳見 `docs/traffic/README.md`。
+
+依賴：`gh` CLI（`gh auth login`）
+
+## `refresh-outreach-status.py` — 偵測 outreach matrix 跟 live PR 狀態落差
+
+`.github/channel-partners.md` 手寫紀錄每個 outreach、但 PR 狀態會老化（送出去的 PR 可能
+merged / closed / 沉了你還沒注意到）。本 script 讀 matrix、抽所有 PR URL、跑 `gh pr view`、
+跟記錄狀態對比、報告 drift。**Report-only**、不改 markdown。
+
+```bash
+# 預設報告
+python scripts/refresh-outreach-status.py
+
+# 調 ghost threshold（OPEN PR 超過 N 天沒動就建議標 ghosted）
+python scripts/refresh-outreach-status.py --ghost-days 21
+
+# Markdown 輸出，pipe 給 gh issue create
+python scripts/refresh-outreach-status.py --format markdown | gh issue create \
+  --title "Outreach drift — $(date +%F)" --body-file -
+
+# CI 模式（有 drift 就 exit 1）
+python scripts/refresh-outreach-status.py --check
+```
+
+判斷規則（保守 V1、只 auto-flag 不會誤判的）：
+- PR `merged: true` → 建議改 `merged-or-listed`（UPDATE）
+- PR `state: CLOSED` 沒 merge → 標 REVIEW（判斷是 declined 還是 abandoned）
+- PR `state: OPEN` 且 reviewer `APPROVED` 卻沒 merge → 標 REVIEW（建議改 `replied-positive`）
+- PR `state: OPEN` 超過 `--ghost-days` 沒更新 → 標 REVIEW（建議改 `ghosted`）
+
+依賴：`gh` CLI（`gh auth login`）
+
 ## 建議的維護節奏
 
 - **每月**：跑一次 `check-links.py --fast` 看 GitHub repo 連結有沒有 404
 - **每月**：跑一次 `check-catalog-staleness.py --include-archived-only` 揪剛 archived 的 entry
+- **每週**：跑一次 `snapshot-traffic.py` 留 traffic 歷史（一週一檔、檔小）
+- **每週**：跑一次 `refresh-outreach-status.py --check` 看 outreach matrix 有沒有 stale
 - **每季**：跑一次 `refresh-stars.py` 看大幅成長 / 衰退的 repo
 - **每季**：跑一次 `check-catalog-staleness.py` 全量 dormant 盤點
 - **每半年**：跑一次完整 `check-links.py`（包含非 GitHub 連結）

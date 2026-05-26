@@ -6,6 +6,13 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-05-26
+
+- **tooling** · `scripts/snapshot-traffic.py` shipped — captures weekly 14-day traffic window (views / clones / referrers / paths + point-in-time totals) to `docs/traffic/snapshots/YYYY-MM-DD.json` so historical trend survives the GitHub API's 14-day visibility limit. Each file ~5 KB. First snapshot included (`docs/traffic/snapshots/2026-05-26.json`).
+- **tooling** · `scripts/refresh-outreach-status.py` shipped — reads `.github/channel-partners.md`, extracts PR URLs, queries `gh pr view`, reports drift between recorded status and live PR state (merged / closed / ghosted / approved). Report-only (text / markdown / json), `--check` for CI. Closes P2-F from the 2026-05-25 audit; P2-E closed by snapshot-traffic.
+
+---
+
 ## 2026-05-25
 
 - **tooling** · `scripts/check-catalog-staleness.py` shipped — queries `gh api repos/<owner>/<repo>` for `pushed_at` + `archived`, flags catalog entries dormant >= N months (default 12) or archived. Report-only (text / markdown / json). Initial run on the 247-repo catalog surfaced 17 stale entries: 5 archived (incl. `langchain-ai/langserve` archived 2026-05-05 still cited as live, `RooCodeInc/Roo-Code` archived 2026-05-15 in setup-guide) + 12 dormant (oldest: `microsoft/prompt-engine` 37 mo).
