@@ -293,6 +293,19 @@ print(f"LLM picked: {tc.function.name}, args: {json.loads(tc.function.arguments)
 
 → **Basic starter template** → [`examples/stage-3/02-multi-tool-selection/`](../examples/stage-3/02-multi-tool-selection/) (starter.py contains stubs + simple tests, illustrative, **not a chapter-length full tutorial**; for in-depth chapters, see the 📚 hello-agents callout at the start of the stage)
 
+### Structured Outputs (JSON mode) ⭐ function calling's twin
+
+Function calling is "**let the model decide whether to act**"; **structured output is "force the model to return a fixed-shape JSON"**. They are easy to confuse but serve different ends: the former lets an agent take action, the latter gives you machine-parseable data (filling forms, classification, extraction, eval scoring).
+
+**Three approaches (weak to strong)**:
+1. **Ask for JSON in the prompt**: simplest, but the model sometimes adds chatter or drifts from the format.
+2. **JSON mode / `response_format`**: the API guarantees valid JSON (but not that it matches your schema).
+3. **JSON-schema enforcement / constrained decoding**: locks the schema too, so the output always conforms (most reliable).
+
+> 💡 Why it matters: agent state, tool arguments, and eval scoring all depend on getting structured data back. This is the load-bearing reliability layer underneath tool calling.
+
+**Hands-on tools**: [jxnl/instructor](https://github.com/jxnl/instructor) (★13k, use a Pydantic model as the schema, with auto-retry); [dottxt-ai/outlines](https://github.com/dottxt-ai/outlines) (★14k, constrained decoding, schema-locks even local LLMs). Stage 4's Pydantic AI is on the same path.
+
 ### Exercise 3: Implement ReAct from Scratch (No Framework)
 Write the Thought → Action → Observation loop in 50-80 lines of Python. No LangChain, no LangGraph, just a pure `while not done: thought; action; observation; ...`.
 

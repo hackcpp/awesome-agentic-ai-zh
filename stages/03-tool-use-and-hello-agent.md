@@ -293,6 +293,19 @@ print(f"LLM 挑了: {tc.function.name}, args: {json.loads(tc.function.arguments)
 
 → **基礎 starter 範本** → [`examples/stage-3/02-multi-tool-selection/`](../examples/stage-3/02-multi-tool-selection/)（starter.py 含 stub + 簡單 test，illustrative，**不是 chapter-length 完整教學**；深度章節見 stage 開頭 📚 hello-agents callout）
 
+### 結構化輸出（Structured Outputs / JSON mode）⭐ function calling 的孿生兄弟
+
+function calling 是「**讓模型決定要不要動手**」；**結構化輸出是「強制模型回傳一個固定形狀的 JSON」**——兩者常搞混，但用途不同：前者讓 agent 採取行動，後者讓你拿到可程式解析的資料（填表、分類、抽取、eval 評分）。
+
+**三種做法（由弱到強）**：
+1. **prompt 要求 JSON**——最簡單、但模型有時會多嘴或格式跑掉。
+2. **JSON mode / `response_format`**——API 保證回合法 JSON（但不保證符合你的 schema）。
+3. **JSON-schema 強制 / constrained decoding**——連 schema 都鎖死，回來的一定符合（最可靠）。
+
+> 💡 為什麼重要：agent 的 state、tool 參數、eval 評分全都依賴「拿得到結構化資料」。這是 tool calling 底下那層 load-bearing 的可靠度基礎。
+
+**動手工具**：[jxnl/instructor](https://github.com/jxnl/instructor)（★13k，把 Pydantic model 當 schema、自動 retry）、[dottxt-ai/outlines](https://github.com/dottxt-ai/outlines)（★14k，constrained decoding、連本機 LLM 都能鎖 schema）；Stage 4 的 Pydantic AI 也是同路線。
+
 ### 練習 3：從零實作 ReAct（不用 framework）
 用 50-80 行 Python 把 Thought → Action → Observation 迴圈寫出來。不要 LangChain、不要 LangGraph，就是純 `while not done: thought; action; observation; ...`。
 
