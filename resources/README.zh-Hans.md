@@ -40,7 +40,7 @@
 
 ### 🔌 我要把 Claude Code 接 X 工具（Notion / Excel / Postgres 等）
 
-→ [`mcp-skills-catalog.zh-Hans.md`](mcp-skills-catalog.zh-Hans.md)（65+ 个集成分 15 类）
+→ [`mcp-skills-catalog.zh-Hans.md`](mcp-skills-catalog.zh-Hans.md)（65+ 个集成分 16 类）
 
 ### 🍳 我想动手写第一个 Skill / MCP server / 接 Word 等
 

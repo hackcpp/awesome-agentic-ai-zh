@@ -47,7 +47,7 @@ for agentic AI:
 
 Each stage has time estimates, prerequisites, hands-on exercises, and 240+
 curated projects across the catalog. The catalog includes MCP servers, Skills,
-and integrations grouped by 15 use-case categories — including a section
+and integrations grouped by 16 use-case categories — including a section
 specifically for the Chinese-language ecosystem (Coze, Qwen-Agent, LangChain
 zh learning, etc.).
 

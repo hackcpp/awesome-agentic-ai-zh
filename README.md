@@ -226,7 +226,7 @@ cd awesome-agentic-ai-zh
 | 你的狀況 | 去哪 | 規模 |
 |---|---|---|
 | 接 Notion / Obsidian / Excel / GitHub 等工具 | [`RESOURCES.md` 接日常工具](RESOURCES.md#接日常工具常用-mcp-server--skill) | 7-8 個 highlight |
-| 完整 MCP server / Skill 目錄（含星等、分類） | [`resources/mcp-skills-catalog.md`](resources/mcp-skills-catalog.md) | 65+ 條、15 大分類 |
+| 完整 MCP server / Skill 目錄（含星等、分類） | [`resources/mcp-skills-catalog.md`](resources/mcp-skills-catalog.md) | 65+ 條、16 大分類 |
 
 ### 🔬 研究 / production 級
 

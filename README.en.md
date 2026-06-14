@@ -220,7 +220,7 @@ Common quick links, grouped by **scenario**:
 | Your situation | Where | Scope |
 |---|---|---|
 | Connect to Notion / Obsidian / Excel / GitHub / etc. | [`RESOURCES.en.md` daily-tool integrations](RESOURCES.en.md#daily-tool-integrations-mcp-servers--skills) | 7-8 highlights |
-| Full MCP server / Skill catalog (stars, categories) | [`resources/mcp-skills-catalog.en.md`](resources/mcp-skills-catalog.en.md) | 65+ entries, 15 categories |
+| Full MCP server / Skill catalog (stars, categories) | [`resources/mcp-skills-catalog.en.md`](resources/mcp-skills-catalog.en.md) | 65+ entries, 16 categories |
 
 ### 🔬 Research / Production
 

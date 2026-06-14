@@ -25,7 +25,7 @@
 2. [Office Documents (Word / Excel / PowerPoint / PDF)](#2-office-documents-word--excel--powerpoint--pdf) (7)
 3. [Google Workspace](#3-google-workspace) (2)
 4. [Microsoft 365](#4-microsoft-365) (3)
-5. [Dev Collaboration (GitHub / Atlassian / Slack…)](#5-dev-collaboration-github--atlassian--slack) (6)
+5. [Dev Collaboration (GitHub / Atlassian / Slack…)](#5-dev-collaboration-github--atlassian--slack) (7)
 6. [Databases](#6-databases) (7)
 7. [Browser Automation / Web Scraping](#7-browser-automation--web-scraping) (4)
 8. [Design (Figma / Excalidraw)](#8-design-figma--excalidraw) (3)
@@ -36,6 +36,7 @@
 13. [Research Workflow Skills](#13-research-workflow-skills-academic--paper--lit) (4)
 14. [Multi-LLM Delegation Skills](#14-multi-llm-delegation-skills) (3)
 15. [Finance / Trading Agents](#15-finance--trading-agents) (2)
+16. [Web Search / Retrieval](#16-web-search--retrieval) (2)
 
 ---
 
@@ -368,6 +369,18 @@
 **What it does**: AI coding skill that turns codebases / SQL schemas / R scripts / shell scripts / docs / papers / images / videos into a queryable knowledge graph. Works across Claude Code, Codex, OpenCode, Cursor, Gemini CLI.
 **Audience**: engineers / researchers analyzing large codebases, tracking cross-file references, or asking questions across "app code + DB schema + infra" together.
 **Notes**: cross-cutting tool — fits both dev collaboration (understanding existing codebases) and research workflow (turning any artifact into a graph). When stuck on a big codebase, use graphify to extract structure, then feed it back to Claude for reasoning.
+
+### [upstash/context7](https://github.com/upstash/context7) ⭐⭐⭐⭐⭐
+
+| Field | Value |
+|---|---|
+| Stars | ★ 57k |
+| License | MIT |
+| Rating | ⭐⭐⭐⭐⭐ (must-have for coding) |
+
+**What it does**: pulls up-to-date library / framework docs into the agent's context so it stops hallucinating outdated APIs — one of the most-installed coding MCPs.
+**Audience**: developers who hit "the LLM wrote code against a stale version of this library" — Context7 feeds the agent current docs on demand.
+**Notes**: among the highest-starred coding MCPs; reach for it whenever the agent's library knowledge lags the version you're actually on.
 
 ---
 
@@ -955,6 +968,34 @@ Claude is bad at token-heavy mechanical work (cost, context blowout); Codex is b
 **What it does**: a multi-role AI hedge-fund simulation where bull / bear / fundamentals / technicals / risk agents collaborate to produce trade recommendations.
 **Audience**: Stage 7 multi-agent learners wanting a complete application example; people interested in the agent × finance crossover.
 **Notes**: NO-LICENSE → same caveat as above. **Simulation only — not investment advice.**
+
+---
+
+## 16. Web Search / Retrieval
+
+### [exa-labs/exa-mcp-server](https://github.com/exa-labs/exa-mcp-server) ⭐⭐⭐⭐
+
+| Field | Value |
+|---|---|
+| Stars | ★ 4.5k+ |
+| License | MIT |
+| Rating | ⭐⭐⭐⭐ (**Exa official**) |
+
+**What it does**: Exa's official MCP — LLM / agent-oriented web search (neural + keyword) that returns clean results to feed straight into prompts.
+**Audience**: people doing research / fact-check / online RAG retrieval — semantic search shines for "concept-related" queries, less so for pure keyword lookups.
+**Notes**: requires an Exa API key.
+
+### [tavily-ai/tavily-mcp](https://github.com/tavily-ai/tavily-mcp) ⭐⭐⭐⭐
+
+| Field | Value |
+|---|---|
+| Stars | ★ 2.1k+ |
+| License | MIT |
+| Rating | ⭐⭐⭐⭐ (beginner-friendly web search) |
+
+**What it does**: Tavily's search API as an MCP — web search built for LLMs / RAG, returning an answer plus its sources.
+**Audience**: a beginner who just wants the agent to search the web — good first pick thanks to an easy free tier.
+**Notes**: free tier available; returns both a synthesized answer and the underlying sources.
 
 ---
 

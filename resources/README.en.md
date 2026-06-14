@@ -40,7 +40,7 @@ You do not need any reference first. **Start with the main [README](../README.en
 
 ### 🔌 I Want to Connect Claude Code to Tool X (Notion / Excel / Postgres / etc.)
 
-→ [`mcp-skills-catalog.en.md`](mcp-skills-catalog.en.md) (65+ integrations in 15 categories)
+→ [`mcp-skills-catalog.en.md`](mcp-skills-catalog.en.md) (65+ integrations in 16 categories)
 
 ### 🍳 I Want to Build My First Skill / MCP Server / Word Integration
 
