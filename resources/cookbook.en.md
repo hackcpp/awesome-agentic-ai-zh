@@ -583,7 +583,7 @@ Watch three things:
 | Cost | Subscription or per-token | `$0` token cost |
 | Speed | Usually steadier | Hardware-dependent, often 2-5x slower |
 | Privacy | Content goes to Anthropic | Content stays local |
-| Reasoning ceiling | Stronger with Claude 4.5+ | Depends on the local model |
+| Reasoning ceiling | Stronger with Claude 4.8+ | Depends on the local model |
 | Best use case | Complex codebases, long context, reliable reasoning | Private files, offline demos, low-cost repetition |
 
 ### Important Limitation: Claude Code Cannot Directly Use a Local LLM

@@ -584,7 +584,7 @@ hermes
 | 成本 | 訂閱或 per-token | `$0` token cost |
 | 速度 | 通常較穩 | 看硬體，常慢 2-5 倍 |
 | 隱私 | 內容送 Anthropic | 內容留在本機 |
-| Reasoning 上限 | Claude 4.5+ 較強 | 取決於本機模型 |
+| Reasoning 上限 | Claude 4.8+ 較強 | 取決於本機模型 |
 | 適合 use case | 複雜 codebase、長 context、可靠推理 | 隱私資料、離線 demo、低成本反覆試 |
 
 ### 重要限制：Claude Code 不能直接用本機 LLM

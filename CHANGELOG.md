@@ -6,6 +6,10 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-06-30
+
+- **content** · Staleness audit Batch 1 (from the 2026-06-29 multi-agent repo audit): removed the phantom "Claude Mythos Preview" attribution on the Stage 7 WebArena benchmark row (→ "領先 model 未公布" — Mythos/Fable benchmarks were never published and access is suspended, so the cell contradicted the table's own caption); glossary Context-Window entry gains Grok 4.3 1M + Mistral Medium 3.5 256k for parity with the Frontier Model entry; cookbook "Claude 4.5+" → "Claude 4.8+"; A2A glossary entry refreshed to v1.0 (Linux Foundation governance, 150+ orgs, signed Agent Cards). All first-party verified. Tri-locale; gates pass.
+
 ## 2026-06-29
 
 - **content** · Stage 1 model table + glossary (frontier + Context-Window entries) + `scripts/freshness-models.yml` whitelist refreshed with late-June-2026 frontier models, all first-party verified: GPT row gains GPT-5.6 (Sol / Terra / Luna, **preview**); Gemini row → 3.5 Flash (3.5 Pro in dev); glossary frontier adds xAI Grok 4.3 (GA) + Mistral Medium 3.5 (open weights, preview), relabeled by half-month (Fable 5 suspension note retained). Preview-vs-GA marked; no fabricated benchmark / context numbers. Tri-locale; anchor / zh-Hans / switcher gates pass.

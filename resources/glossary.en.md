@@ -64,7 +64,7 @@ LLMs see **tokens** (sub-word units), not characters. Roughly 1 English word ≈
 
 ### Context Window
 
-The maximum tokens an LLM can "see" in one call. **2026 frontier**: Claude Sonnet 4.6 / Opus 4.8 1M, GPT-5.6 (preview) ~400k, Gemini 3.5 Flash 1M (Pro series up to 2M). **Bigger isn't always better** — beyond a length the LLM gets "Lost in the Middle".
+The maximum tokens an LLM can "see" in one call. **2026 frontier**: Claude Sonnet 4.6 / Opus 4.8 1M, GPT-5.6 (preview) ~400k, Gemini 3.5 Flash 1M (Pro series up to 2M), xAI Grok 4.3 1M, Mistral Medium 3.5 256k. **Bigger isn't always better** — beyond a length the LLM gets "Lost in the Middle".
 
 ### Prompt
 
@@ -233,7 +233,7 @@ One agent transfers a task to another. Adds "how to pass context" and "who handl
 
 ### A2A (Agent-to-Agent) Protocol
 
-Google's protocol for agent ↔ agent communication. Sibling to MCP, but for agent-to-agent rather than agent-to-tool.
+An agent ↔ agent communication protocol started by Google and now governed by the Linux Foundation. Sibling to MCP, but for agent-to-agent rather than agent-to-tool. Reached **v1.0** in 2026 (150+ organizations, plus identity verification so one agent can confirm another really is who it claims to be).
 
 ---
 
