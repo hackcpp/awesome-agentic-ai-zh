@@ -223,6 +223,7 @@ Official GitHub Action template. PR review, issue triage, auto-fix.
 ## ✅ Track A Full Self-Check
 
 Can you:
+
 - [ ] Have at least 1 MCP server connected to your daily CLI
 - [ ] Have at least 1 CI workflow auto-running a CLI agent
 - [ ] State the rough token / cost / latency for some specific task you run

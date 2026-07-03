@@ -98,6 +98,7 @@ Closed-source desktop app — drag-and-drop UI for local LLMs. Try this first if
 ## ✅ Self-Check Before A2
 
 Can you:
+
 - [ ] Articulate the core differences between the 7 mainstream CLIs (3-4 without checking the table)
 - [ ] Have a working primary CLI (installed, authed, ran 5+ real tasks)
 - [ ] Written your own `CLAUDE.md` / `AGENTS.md` / `GEMINI.md`

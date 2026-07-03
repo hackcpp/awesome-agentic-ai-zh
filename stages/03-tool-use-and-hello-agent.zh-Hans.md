@@ -503,6 +503,7 @@ messages.append({"role": "tool", "tool_call_id": tc.id,
 ## ✅ 进 Stage 4 前的自我检查
 
 你能不能：
+
 - [ ] 定义一个 tool schema（name + description + JSON schema 输入/输出）
 - [ ] 用不到 100 行 Python、不靠任何 framework，把 ReAct 循环写出来
 - [ ] 解释为什么 agent 需要一个“我做完了”的退出条件

@@ -101,6 +101,7 @@ description: Review staged changes for security + style
 ## ✅ 進 A3 前的自我檢查
 
 你能不能：
+
 - [ ] 寫過至少 1 份你 production / 工作 repo 的 CLAUDE.md（不是 demo repo）
 - [ ] 寫過至少 2 個 slash command 並實際在用
 - [ ] 把同一個 prompt 在 2 個不同 CLI 上跑過、知道差異

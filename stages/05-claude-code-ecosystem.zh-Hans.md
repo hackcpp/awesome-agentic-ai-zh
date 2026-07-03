@@ -939,6 +939,7 @@ async for msg in query(prompt="用 git status 看当前状态"):
 ## ✅ 进入 Stage 6 前的自我检查
 
 你能不能：
+
 - [ ] 安装 Claude Code 并使用 5 个不同的 slash command
 - [ ] 在同一个 Claude session 里接 2 个 MCP server
 - [ ] 用 Python 写自己的 MCP server，提供 1 个能用的 tool

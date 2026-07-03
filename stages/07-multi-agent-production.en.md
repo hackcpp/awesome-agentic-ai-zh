@@ -316,6 +316,7 @@ Categorized by use case, a single table to get you started with 27 projects. **U
 ## ✅ Self-Check After Stage 7
 
 Can you:
+
 - [ ] Design a multi-agent system and clearly explain its collaboration protocol?
 - [ ] Run an automated eval pipeline in CI?
 - [ ] Connect observability (tracing) to a production agent?

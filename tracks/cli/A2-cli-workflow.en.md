@@ -116,6 +116,7 @@ Look at Setup A / B / C and try one that fits.
 ## ✅ Self-Check Before A3
 
 Can you:
+
 - [ ] Written at least 1 CLAUDE.md for a production / work repo (not a demo repo)
 - [ ] Written at least 2 slash commands you actually use
 - [ ] Run the same prompt across 2 different CLIs and know the differences

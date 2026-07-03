@@ -197,6 +197,7 @@ Description.
 
 ## ✅ Self-Check Before Stage N+1
 Can you:
+
 - [ ] ...
 - [ ] ...
 

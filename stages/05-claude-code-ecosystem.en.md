@@ -939,6 +939,7 @@ Both are MIT-licensed with clean APIs. **The real question is which model your d
 ## ✅ Self-Check Before Stage 6
 
 Can you:
+
 - [ ] Install Claude Code and use 5 different slash commands?
 - [ ] Connect 2 MCP servers in the same Claude session?
 - [ ] Write your own MCP server in Python that provides 1 usable tool?

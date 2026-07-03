@@ -457,6 +457,7 @@ Further reading (optional, for when you want to dig deeper):
 ## ✅ Self-Check Before Stage 3
 
 Can you:
+
 - [ ] Write a prompt with system message + user message + 3 example messages (few-shot)
 - [ ] Demonstrate CoT improving accuracy on a reasoning task
 - [ ] Iteratively refine a prompt 5 times tracking each version

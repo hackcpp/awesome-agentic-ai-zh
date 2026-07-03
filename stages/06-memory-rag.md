@@ -744,6 +744,7 @@ OpenAI **o1**（2024-09）開啟、DeepSeek **R1**（2025-01）開源化、**Dee
 ## ✅ 進入 Stage 7 前的自我檢查
 
 你能不能：
+
 - [ ] 寫一條 50 行的 RAG 流水線（load → chunk → embed → store → query → answer）
 - [ ] 解釋為什麼天真的切塊在長文件上會失敗
 - [ ] 針對 API 文件、PDF、表格設計不同的 chunking 策略

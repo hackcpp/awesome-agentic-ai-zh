@@ -116,6 +116,7 @@ official — Claude Code memory / CLAUDE.md 编写的官方说明，含 best pra
 ## ✅ 进 A3 前的自我检查
 
 你能不能：
+
 - [ ] 写过至少 1 份你 production / 工作 repo 的 CLAUDE.md（不是 demo repo）
 - [ ] 写过至少 2 个 slash command 并实际在用
 - [ ] 把同一个 prompt 在 2 个不同 CLI 上跑过、知道差异

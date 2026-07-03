@@ -223,6 +223,7 @@ Track A 的人**已经在用** [Stage 7.5 的进阶概念](../../stages/07.5-adv
 ## ✅ Track A 完整通关自我检查
 
 你能不能：
+
 - [ ] 已有至少 1 个 MCP server 接到你日常 CLI
 - [ ] 已有至少 1 个 CI workflow 在自动跑 CLI agent
 - [ ] 你能讲出某个 task 跑下去的 token 用量、cost、latency 大致范围

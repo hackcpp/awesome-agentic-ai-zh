@@ -483,6 +483,7 @@ print(f"💡 This run cost you $0 (except for electricity)")
 ## ✅ Self-Check Before Stage 2
 
 Can you:
+
 - [ ] Make a Claude API call from Python in 5 lines
 - [ ] Explain why "你好" might use 2 tokens but "Hello" uses 1
 - [ ] Quote roughly the per-token price for Claude Sonnet vs Opus

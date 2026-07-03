@@ -209,6 +209,7 @@ Use Pydantic AI to build an agent that returns structured output (e.g., for a gi
 ## ✅ Self-Check Before Moving to Stage 5
 
 Can you:
+
 - [ ] Build the same agent using both LangGraph and CrewAI?
 - [ ] Choose the right framework for a task (production vs. prototype)?
 - [ ] Explain the difference between LangGraph's checkpointing and CrewAI's task delegation?

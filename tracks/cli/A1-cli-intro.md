@@ -81,6 +81,7 @@
 ## ✅ 進 A2 前的自我檢查
 
 你能不能：
+
 - [ ] 講得出 7 個主流 CLI 的核心差別（不查表就答得出 3-4 個）
 - [ ] 你已經選定一個主用 CLI，並有 working setup（裝好、認證好、跑過至少 5 個非 hello-world 任務）
 - [ ] 寫過你自己的 `CLAUDE.md` / `AGENTS.md` / `GEMINI.md`

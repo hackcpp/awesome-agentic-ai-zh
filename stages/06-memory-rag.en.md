@@ -739,6 +739,7 @@ Categorized for quick reference; **choose by use case ("Entry Point") and follow
 ## ✅ Self-Check Before Entering Stage 7
 
 Can you:
+
 - [ ] Write a 50-line RAG pipeline (load → chunk → embed → store → query → answer)?
 - [ ] Explain why naive chunking fails on long documents?
 - [ ] Design different chunking strategies for API docs, PDFs, and tables?

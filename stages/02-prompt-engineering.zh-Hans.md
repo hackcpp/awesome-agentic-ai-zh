@@ -470,6 +470,7 @@ LLM-powered system 的工程实践可以拆成 **3 层 stack**。这不是 1 次
 ## ✅ 进 Stage 3 前的自我检查
 
 你能不能：
+
 - [ ] 写一个有 system message + user message + 3 个示例 message 的 prompt（few-shot）
 - [ ] 示范 CoT 在某个推理任务上提升准确率
 - [ ] 反复 refine 一个 prompt 5 次，每一版都留下记录

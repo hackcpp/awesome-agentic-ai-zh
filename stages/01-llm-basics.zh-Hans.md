@@ -482,6 +482,7 @@ print(f"💡 跑这次完全没花钱（除了你的电力）")
 ## ✅ 进 Stage 2 前的自我检查
 
 你需要完成以下任务：
+
 - [ ] 写一个 5 行的 Python 脚本调用 Claude API。
 - [ ] 理解“基础概念”中的至少 2 个 token（例如，“Hello” 是 1 个）。
 - [ ] 比较 Claude Sonnet vs Opus 的 per-token 价格。

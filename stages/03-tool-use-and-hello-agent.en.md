@@ -502,6 +502,7 @@ messages.append({"role": "tool", "tool_call_id": tc.id,
 ## ✅ Self-Check Before Stage 4
 
 Can you:
+
 - [ ] Define a tool schema (name + description + JSON schema for input/output)?
 - [ ] Write a ReAct loop in under 100 lines of Python, without any framework?
 - [ ] Explain why an agent needs an "I'm done" exit condition?

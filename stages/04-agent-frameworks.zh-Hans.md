@@ -209,6 +209,7 @@ Stage 3 教你写 single tool / multi-tool selection（手写 `if/elif/else` 路
 ## ✅ 进 Stage 5 前的自我检查
 
 你能不能：
+
 - [ ] 用 LangGraph 跟 CrewAI 各做一次同一个 agent
 - [ ] 替任务挑出对的 framework（production vs 雏形）
 - [ ] 解释 LangGraph 的 checkpoint 跟 CrewAI 的 task delegation 差在哪

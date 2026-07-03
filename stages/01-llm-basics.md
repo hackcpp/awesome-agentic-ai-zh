@@ -539,6 +539,7 @@ print(f"💡 跑這次完全沒花錢（除了你的電力）")
 ## ✅ 進 Stage 2 前的自我檢查
 
 你能不能：
+
 - [ ] 用 5 行 Python 呼叫 Claude API
 - [ ] 解釋為什麼「你好」可能用 2 個 token，但「Hello」只用 1 個
 - [ ] 大致說出 Claude Sonnet vs Opus 的 per-token 價格
